@@ -37,6 +37,7 @@ export {
   answersHasPhoto,
   answersToQuery,
   createFlowState,
+  createSeededFlowState,
   getCurrentStep,
   getStepProgress,
   goBackStep,

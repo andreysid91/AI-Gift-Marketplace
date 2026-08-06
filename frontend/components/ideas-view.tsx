@@ -109,7 +109,7 @@ export function IdeasView({ query, hasPhoto }: IdeasViewProps) {
             🎁 Мы подобрали подарки для вас
           </h1>
           <p className="mt-4 text-lg font-bold text-[var(--muted)] sm:text-xl">
-            Выберите понравившийся вариант или попросите AI создать новые.
+            Выберите понравившийся вариант или попросите создать новые.
           </p>
         </div>
 
@@ -154,7 +154,7 @@ export function IdeasView({ query, hasPhoto }: IdeasViewProps) {
               onChange={(value) => updateFilter("technology", value)}
             />
             <FilterGroup
-              label="Стиль AI"
+              label="Стиль"
               value={filters.style}
               options={FILTER_OPTIONS.style}
               onChange={(value) => updateFilter("style", value)}
@@ -267,7 +267,7 @@ function IdeaCard({ idea }: { idea: GiftIdea }) {
         </div>
 
         <Link
-          href={`/product?id=${idea.id}`}
+          href={`/gift?id=${idea.id}`}
           onClick={() => trackProductOpen(idea.id)}
           className="mt-5 inline-flex items-center justify-center rounded-[22px] bg-[var(--accent)] px-5 py-3.5 text-base font-extrabold text-white transition hover:bg-[var(--accent-hover)]"
         >

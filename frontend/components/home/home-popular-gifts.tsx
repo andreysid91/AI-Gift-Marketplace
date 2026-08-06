@@ -4,47 +4,55 @@ const GIFTS = [
   {
     title: "Кружка",
     emoji: "☕",
-    href: "/ideas?q=" + encodeURIComponent("Кружка с фото"),
+    href: "/gift?id=mug",
     tone: "from-[#ffb4a2] to-[#ff6b4a]",
   },
   {
     title: "Футболка",
     emoji: "👕",
-    href: "/ideas?q=" + encodeURIComponent("Футболка с принтом"),
+    href: "/gift?id=tee",
     tone: "from-[#ffd59a] to-[#ff9f43]",
   },
   {
     title: "Холст",
     emoji: "🖼️",
-    href: "/ideas?q=" + encodeURIComponent("Холст с портретом"),
+    href: "/gift?id=canvas",
     tone: "from-[#f7b6c8] to-[#e84d6f]",
+  },
+  {
+    title: "Пазл",
+    emoji: "🧩",
+    href: "/gift?id=puzzle",
+    tone: "from-[#9de7c8] to-[#3db88a]",
   },
   {
     title: "Фотокнига",
     emoji: "📖",
-    href: "/ideas?q=" + encodeURIComponent("Фотокнига"),
+    href: "/create?scenario=photo&q=" + encodeURIComponent("Фотокнига"),
     tone: "from-[#ffe0b8] to-[#e8a04a]",
   },
   {
     title: "Подарочный набор",
     emoji: "🎁",
-    href: "/ideas?q=" + encodeURIComponent("Подарочный набор"),
-    tone: "from-[#9de7c8] to-[#3db88a]",
-  },
-  {
-    title: "3D фигурка",
-    emoji: "🧸",
-    href: "/create?scenario=print_3d",
-    tone: "from-[#ffc4b0] to-[#d96b4c]",
+    href: "/gift?id=idea-04",
+    tone: "from-[#ffc9b0] to-[#ff7a5c]",
   },
 ] as const;
 
 export function HomePopularGifts() {
   return (
     <section>
-      <h2 className="font-[family-name:var(--font-unbounded)] text-3xl font-semibold sm:text-4xl">
-        Популярные подарки
-      </h2>
+      <div className="flex flex-wrap items-end justify-between gap-3">
+        <h2 className="font-[family-name:var(--font-unbounded)] text-3xl font-semibold sm:text-4xl">
+          Популярные подарки
+        </h2>
+        <Link
+          href="/popular"
+          className="font-extrabold text-[var(--accent)] hover:underline"
+        >
+          Всё популярное →
+        </Link>
+      </div>
 
       <ul className="mt-6 grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
         {GIFTS.map((gift, index) => (

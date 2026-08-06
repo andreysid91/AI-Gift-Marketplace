@@ -144,7 +144,7 @@ export function DesignStudio() {
             />
             <ModeCard
               title="Удиви меня"
-              hint="ИИ сам предложит идеи"
+              hint="Сами предложим идеи"
               emoji="✨"
               tone="from-[#3db88a] to-[#2a9a72]"
               onClick={() => chooseMode("surprise")}
@@ -242,7 +242,7 @@ export function DesignStudio() {
           {mode === "surprise" ? (
             <div className="mt-6">
               <p className="text-base font-bold text-[var(--muted)]">
-                ИИ предложит неожиданные идеи. Можно подкрутить тему или оставить
+                Предложим неожиданные идеи. Можно подкрутить тему или оставить
                 как есть.
               </p>
               <input

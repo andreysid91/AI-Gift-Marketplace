@@ -20,6 +20,7 @@ type CreateViewProps = {
   query: string;
   hasPhoto: boolean;
   forcedScenario?: ScenarioId | string;
+  initialRecipient?: string;
 };
 
 type Phase = "wizard" | "result";
@@ -28,6 +29,7 @@ export function CreateView({
   query,
   hasPhoto,
   forcedScenario,
+  initialRecipient,
 }: CreateViewProps) {
   const router = useRouter();
   const initial = classifyScenario(query, {
@@ -105,6 +107,7 @@ export function CreateView({
               scenarioId={scenarioId}
               query={query}
               hasPhoto={hasPhoto}
+              initialRecipient={initialRecipient}
               onScenarioChange={setScenarioId}
               onComplete={onComplete}
             />

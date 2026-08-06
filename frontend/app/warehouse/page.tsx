@@ -3,7 +3,7 @@ import Link from "next/link";
 import { WarehousePageClient } from "../../components/warehouse-page-client";
 
 export const metadata: Metadata = {
-  title: "Склад — AI Gift",
+  title: "Склад — Gift",
   description:
     "Модуль склада: остатки, минимальный порог, автостатусы заканчивается / закончилось / нужно купить.",
 };
@@ -20,7 +20,7 @@ export default function WarehousePage() {
         <div className="mb-8 flex flex-wrap items-center justify-between gap-4">
           <div>
             <p className="font-[family-name:var(--font-unbounded)] text-lg font-semibold text-[var(--accent)]">
-              AI Gift · Склад
+              Gift · Склад
             </p>
             <h1 className="mt-2 font-[family-name:var(--font-unbounded)] text-4xl font-semibold sm:text-5xl">
               Модуль склада

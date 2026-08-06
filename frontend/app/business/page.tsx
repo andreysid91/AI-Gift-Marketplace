@@ -3,7 +3,7 @@ import Link from "next/link";
 import { BusinessDirectionView } from "../../components/business-direction-view";
 
 export const metadata: Metadata = {
-  title: "Корпоративная продукция под заказ — AI Gift",
+  title: "Корпоративная продукция под заказ — Gift",
   description:
     "Футболки, кружки, кепки, толстовки, наборы, медали и кубки для компаний. Тираж от 10 до 1000+. Расчёт под ваш бренд.",
 };
@@ -28,7 +28,7 @@ export default function BusinessPage() {
         {/* Hero for executives */}
         <header className="mt-8 max-w-4xl animate-fade-rise sm:mt-10">
           <p className="font-[family-name:var(--font-unbounded)] text-lg font-semibold tracking-tight text-[var(--mint)] sm:text-xl">
-            AI Gift · Для бизнеса
+            Gift · Для бизнеса
           </p>
           <h1 className="mt-3 font-[family-name:var(--font-unbounded)] text-4xl font-semibold leading-[1.05] tracking-tight text-[var(--foreground)] sm:text-5xl lg:text-6xl xl:text-[68px]">
             Корпоративная продукция под заказ

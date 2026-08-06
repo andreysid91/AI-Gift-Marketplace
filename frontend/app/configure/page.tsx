@@ -19,7 +19,7 @@ export default async function ConfigurePage({ searchParams }: Props) {
           href="/"
           className="inline-flex text-base font-extrabold text-[var(--accent)] hover:underline"
         >
-          ← AI Gift
+          ← Gift
         </Link>
         <h1 className="mt-8 font-[family-name:var(--font-unbounded)] text-4xl font-semibold sm:text-5xl">
           Universal Product Card

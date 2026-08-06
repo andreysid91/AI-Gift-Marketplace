@@ -3,7 +3,7 @@ import Link from "next/link";
 import { AdminDashboard } from "../../components/admin-dashboard";
 
 export const metadata: Metadata = {
-  title: "Admin — AI Gift",
+  title: "Admin — Gift",
   description: "Панель заявок, заказов, партнёров и товаров. Без авторизации (демо).",
 };
 
@@ -19,7 +19,7 @@ export default function AdminPage() {
         <div className="flex flex-wrap items-center justify-between gap-4">
           <div>
             <p className="font-[family-name:var(--font-unbounded)] text-lg font-semibold text-[var(--accent)]">
-              AI Gift · Admin
+              Gift · Admin
             </p>
             <h1 className="mt-2 font-[family-name:var(--font-unbounded)] text-4xl font-semibold tracking-tight sm:text-5xl">
               Панель управления

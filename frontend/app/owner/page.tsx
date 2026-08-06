@@ -3,7 +3,7 @@ import Link from "next/link";
 import { OwnerDashboard } from "../../components/owner-dashboard";
 
 export const metadata: Metadata = {
-  title: "Owner Dashboard — AI Gift",
+  title: "Owner Dashboard — Gift",
   description: "Полный доступ владельца: заказы, прибыль, партнёры, база знаний, AI.",
 };
 
@@ -19,7 +19,7 @@ export default function OwnerPage() {
         <div className="mb-8 flex flex-wrap items-center justify-between gap-4">
           <div>
             <p className="font-[family-name:var(--font-unbounded)] text-lg font-semibold text-[var(--accent)]">
-              AI Gift · Owner
+              Gift · Owner
             </p>
             <h1 className="mt-2 font-[family-name:var(--font-unbounded)] text-4xl font-semibold sm:text-5xl">
               Owner Dashboard

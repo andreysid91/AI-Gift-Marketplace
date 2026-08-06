@@ -260,7 +260,7 @@ export function GiftPickerView({
 
   const sourceLabel =
     recommendation?.source === "ai"
-      ? "Gift Engine · AI-уточнение"
+      ? "Уточнение подбора"
       : recommendation?.source === "knowledge"
         ? "Gift Engine · база знаний"
         : aiLoading

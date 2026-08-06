@@ -156,7 +156,7 @@ export function SmartSearch({ className = "", autoFocus = false }: SmartSearchPr
             aria-activedescendant={
               activeIndex >= 0 ? `${listId}-option-${activeIndex}` : undefined
             }
-            placeholder="Начните печатать — как в чате…"
+            placeholder="Например: маме на день рождения…"
             onChange={(event) => {
               setQuery(event.target.value);
               setOpen(true);

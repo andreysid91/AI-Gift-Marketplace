@@ -127,7 +127,7 @@ export function authenticateOwner(
     login.trim().toLowerCase() === OWNER_LOGIN &&
     password === OWNER_PASSWORD
   ) {
-    return { role: "owner", name: "Владелец AI Gift", login: OWNER_LOGIN };
+    return { role: "owner", name: "Владелец", login: OWNER_LOGIN };
   }
   return null;
 }

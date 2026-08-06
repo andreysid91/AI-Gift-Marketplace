@@ -2,7 +2,7 @@ import Link from "next/link";
 import { DesignStudio } from "../../components/design-studio";
 
 export const metadata = {
-  title: "Генерация дизайна — AI Gift",
+  title: "Генерация дизайна — Gift",
   description:
     "Дизайн по фото, по описанию или «Удиви меня». 4 варианта — затем кружка, футболка, холст и другие изделия.",
 };
@@ -20,7 +20,7 @@ export default function DesignPage() {
           href="/"
           className="inline-flex text-base font-extrabold text-[var(--accent)] hover:underline"
         >
-          ← AI Gift
+          ← Gift
         </Link>
 
         <div className="mt-8">

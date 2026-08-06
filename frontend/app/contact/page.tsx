@@ -3,7 +3,7 @@ import Link from "next/link";
 import { IdeaForm } from "../../components/idea-form";
 
 export const metadata: Metadata = {
-  title: "Опишите свою идею — AI Gift",
+  title: "Опишите свою идею — Gift",
   description:
     "Напишите что угодно — фигурку, тираж, вышивку, шахматы. Подготовим варианты реализации.",
 };

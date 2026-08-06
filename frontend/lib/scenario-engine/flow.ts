@@ -15,6 +15,32 @@ export function createFlowState(scenarioId: ScenarioId): ScenarioFlowState {
   };
 }
 
+/**
+ * Start wizard with known answers (e.g. recipient from Gift Hub card).
+ * Advances past every step whose field is already seeded.
+ */
+export function createSeededFlowState(
+  scenarioId: ScenarioId,
+  seed: Partial<ScenarioAnswers> = {},
+): ScenarioFlowState {
+  let state = createFlowState(scenarioId);
+  const def = getScenarioDefinition(scenarioId);
+
+  while (!state.done) {
+    const step = getCurrentStep(state);
+    if (step.kind === "done") break;
+    const value = seed[step.field];
+    if (value === undefined || value === null || value === "") break;
+    state = answerCurrentStep(
+      state,
+      value as string | number | boolean | null,
+    );
+    if (state.stepIndex >= def.steps.length) break;
+  }
+
+  return state;
+}
+
 export function getCurrentStep(state: ScenarioFlowState): ScenarioStep {
   const def = getScenarioDefinition(state.scenarioId);
   const step = def.steps[state.stepIndex] ?? def.steps[def.steps.length - 1];

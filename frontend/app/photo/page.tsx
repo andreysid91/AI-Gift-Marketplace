@@ -3,7 +3,7 @@ import Link from "next/link";
 import { PhotoCatalog } from "../../components/photo-catalog";
 
 export const metadata: Metadata = {
-  title: "Фотопечать — AI Gift",
+  title: "Фотопечать — Gift",
   description:
     "Что хотите напечатать? Фотографии, холст, постер, пазл, календарь, магнит, фотокнига, открытка.",
 };
@@ -27,7 +27,7 @@ export default function PhotoPage() {
 
         <header className="mt-8 max-w-4xl animate-fade-rise sm:mt-10">
           <p className="font-[family-name:var(--font-unbounded)] text-lg font-semibold tracking-tight text-[#3b6fd8] sm:text-xl">
-            AI Gift · Фотопечать
+            Gift · Фотопечать
           </p>
           <h1 className="mt-3 font-[family-name:var(--font-unbounded)] text-4xl font-semibold leading-[1.05] tracking-tight text-[var(--foreground)] sm:text-5xl lg:text-6xl xl:text-[68px]">
             Что хотите напечатать?

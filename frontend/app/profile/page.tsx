@@ -2,7 +2,7 @@ import Link from "next/link";
 import { GiftProfileEditor } from "../../components/gift-profile-editor";
 
 export const metadata = {
-  title: "Gift Profile — AI Gift",
+  title: "Gift Profile — Gift",
   description: "Публичная страница подарков: wish list, категории и приватность.",
 };
 
@@ -19,7 +19,7 @@ export default function ProfilePage() {
             href="/"
             className="inline-flex text-base font-extrabold text-[var(--accent)] hover:underline"
           >
-            ← AI Gift
+            ← Gift
           </Link>
           <Link
             href="/account"

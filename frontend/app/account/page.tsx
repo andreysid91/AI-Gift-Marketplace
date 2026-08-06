@@ -15,7 +15,7 @@ export default function AccountPage() {
           href="/"
           className="inline-flex text-base font-extrabold text-[var(--accent)] hover:underline"
         >
-          ← AI Gift
+          ← Gift
         </Link>
         <div className="mt-8">
           <Suspense

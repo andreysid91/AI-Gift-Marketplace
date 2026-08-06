@@ -1,4 +1,3 @@
-import Link from "next/link";
 import type { ReactNode } from "react";
 
 type DirectionShellProps = {
@@ -24,15 +23,7 @@ export function DirectionShell({
       />
 
       <div className="relative z-10 mx-auto w-full max-w-7xl px-5 py-6 sm:px-8 sm:py-8 lg:py-10">
-        <Link
-          href="/"
-          className="inline-flex items-center gap-2 text-base font-extrabold text-[var(--accent)] transition hover:gap-3"
-        >
-          <span aria-hidden>←</span>
-          На главную
-        </Link>
-
-        <header className="mt-8 max-w-3xl animate-fade-rise">
+        <header className="max-w-3xl animate-fade-rise">
           <p
             className={`font-[family-name:var(--font-unbounded)] text-lg font-semibold tracking-tight sm:text-xl ${accentClass}`}
           >

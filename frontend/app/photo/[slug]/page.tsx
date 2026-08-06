@@ -21,10 +21,10 @@ export async function generateMetadata({
   const { slug } = await params;
   const product = getPhotoProduct(slug);
   if (!product) {
-    return { title: "Фотопечать — AI Gift" };
+    return { title: "Фотопечать — Gift" };
   }
   return {
-    title: `${product.title} — фотопечать | AI Gift`,
+    title: `${product.title} — фотопечать | Gift`,
     description: product.description,
   };
 }

@@ -99,11 +99,11 @@ export function CreateInspirationForm({ orderId }: Props) {
       setError(result.message);
       return;
     }
-    if (result.work.publishToGallery) {
-      router.push("/inspiration?created=1");
-    } else {
-      router.push("/account?work=1&private=1");
-    }
+    router.push(
+      result.work.publishToGallery
+        ? "/account?work=1&published=1"
+        : "/account?work=1&private=1",
+    );
   }
 
   if (!ready) {
@@ -184,21 +184,13 @@ export function CreateInspirationForm({ orderId }: Props) {
         </h1>
         <p className="mt-3 font-bold text-[var(--muted)]">
           {existing.publishToGallery
-            ? "Она уже в галерее вдохновения."
-            : "Она сохранена как личная (не в галерее)."}
+            ? "Работа сохранена и доступна для Inspiration Engine."
+            : "Она сохранена как личная."}
         </p>
         <div className="mt-6 flex flex-wrap gap-3">
-          {existing.publishToGallery ? (
-            <Link
-              href="/inspiration"
-              className="rounded-[22px] bg-[var(--accent)] px-6 py-3 font-extrabold text-white"
-            >
-              Открыть галерею
-            </Link>
-          ) : null}
           <Link
             href="/account"
-            className="rounded-[22px] border-2 border-[var(--line)] px-6 py-3 font-extrabold"
+            className="rounded-[22px] bg-[var(--accent)] px-6 py-3 font-extrabold text-white"
           >
             В кабинет
           </Link>
@@ -288,11 +280,11 @@ export function CreateInspirationForm({ orderId }: Props) {
         />
         <span>
           <span className="block text-base font-extrabold">
-            Опубликовать в галерее вдохновения
+            Поделиться как вдохновение
           </span>
           <span className="mt-1 block text-sm font-bold text-[var(--muted)]">
-            По умолчанию не публикуем. Отметьте, если хотите показать работу
-            всем.
+            Работа попадёт в Inspiration Engine на страницах подарков. По
+            умолчанию — только у вас в кабинете.
           </span>
         </span>
       </label>

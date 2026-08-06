@@ -22,7 +22,7 @@ export default async function LoginPage({ searchParams }: LoginPageProps) {
           href="/"
           className="inline-flex text-base font-extrabold text-[var(--accent)] hover:underline"
         >
-          ← AI Gift
+          ← Gift
         </Link>
 
         <div className="mt-8">

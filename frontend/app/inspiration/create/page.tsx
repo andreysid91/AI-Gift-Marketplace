@@ -17,10 +17,10 @@ export default async function CreateInspirationPage({ searchParams }: Props) {
 
       <div className="relative z-10 mx-auto w-full max-w-xl px-5 py-10 sm:py-14">
         <Link
-          href="/inspiration"
+          href="/account"
           className="inline-flex text-base font-extrabold text-[var(--accent)] hover:underline"
         >
-          ← Галерея вдохновения
+          ← В кабинет
         </Link>
 
         <div className="mt-8">

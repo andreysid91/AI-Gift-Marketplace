@@ -6,7 +6,7 @@ import { HowItWorks } from "../../components/how-it-works";
 import { PopularCategories } from "../../components/popular-categories";
 
 export const metadata: Metadata = {
-  title: "Подарок — AI Gift",
+  title: "Подарок — Gift",
   description: "Создайте уникальный персональный подарок по описанию или фото.",
 };
 

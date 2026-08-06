@@ -8,7 +8,7 @@ type Props = {
 export async function generateMetadata({ params }: Props) {
   const { slug } = await params;
   return {
-    title: `Gift Profile · ${slug} — AI Gift`,
+    title: `Gift Profile · ${slug} — Gift`,
     description: "Публичный профиль подарков и wish list.",
   };
 }
@@ -27,7 +27,7 @@ export default async function PublicProfilePage({ params }: Props) {
           href="/"
           className="inline-flex text-base font-extrabold text-[var(--accent)] hover:underline"
         >
-          ← AI Gift
+          ← Gift
         </Link>
         <div className="mt-8">
           <PublicGiftProfileView slug={slug} />

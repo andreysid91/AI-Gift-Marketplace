@@ -220,7 +220,7 @@ export function CheckoutForm({
   const backHref = giftMode
     ? `/ideas?q=${encodeURIComponent(giftOrder.query || giftQuery || "")}`
     : productId
-      ? `/product?id=${productId}`
+      ? `/gift?id=${productId}`
       : "/";
 
   const orderTitle = giftMode

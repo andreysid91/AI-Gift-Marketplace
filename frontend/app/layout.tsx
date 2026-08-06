@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import { Nunito, Unbounded } from "next/font/google";
+import { GiftHubNav } from "../components/gift-hub/gift-hub-nav";
 import "./globals.css";
 
 const nunito = Nunito({
@@ -15,9 +16,9 @@ const unbounded = Unbounded({
 });
 
 export const metadata: Metadata = {
-  title: "AI Gift — что хотите подарить?",
+  title: "Gift — кому подарок?",
   description:
-    "Опишите своими словами, а мы подберём лучшие варианты подарков.",
+    "Выберите, кому подарок — подберём готовые идеи под повод и бюджет.",
 };
 
 export default function RootLayout({
@@ -30,7 +31,10 @@ export default function RootLayout({
       lang="ru"
       className={`${nunito.variable} ${unbounded.variable} h-full antialiased`}
     >
-      <body className="min-h-full flex flex-col font-sans">{children}</body>
+      <body className="flex min-h-full flex-col font-sans">
+        <GiftHubNav />
+        <div className="flex flex-1 flex-col">{children}</div>
+      </body>
     </html>
   );
 }

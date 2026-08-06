@@ -3,8 +3,8 @@ import Link from "next/link";
 import { PartnerPortalLogin } from "../../components/partner-portal-login";
 
 export const metadata: Metadata = {
-  title: "Partner Portal — AI Gift",
-  description: "Вход для производственных партнёров AI Gift.",
+  title: "Partner Portal — Gift",
+  description: "Вход для производственных партнёров Gift.",
 };
 
 export default function PartnerLoginPage() {
@@ -25,7 +25,7 @@ export default function PartnerLoginPage() {
 
         <header className="mt-8 max-w-xl">
           <p className="font-[family-name:var(--font-unbounded)] text-2xl font-semibold text-[var(--accent)]">
-            AI Gift
+            Gift
           </p>
           <h1 className="mt-3 font-[family-name:var(--font-unbounded)] text-4xl font-semibold sm:text-5xl">
             Partner Portal

@@ -103,7 +103,7 @@ export function ExpressGiftFlow() {
         {step === "hero" ? (
           <section className="mt-10 flex min-h-[70vh] flex-col justify-center pb-16 sm:mt-14">
             <p className="font-[family-name:var(--font-unbounded)] text-2xl font-semibold text-[var(--accent)] sm:text-3xl">
-              AI Gift
+              Gift
             </p>
             <p className="mt-6 text-sm font-extrabold uppercase tracking-[0.18em] text-[var(--muted)]">
               Экспресс подарок

@@ -6,6 +6,7 @@ import {
   answersHasPhoto,
   answersToQuery,
   createFlowState,
+  createSeededFlowState,
   getCurrentStep,
   getScenarioDefinition,
   getScenarioLabel,
@@ -22,6 +23,8 @@ type ScenarioWizardProps = {
   scenarioId: ScenarioId;
   query: string;
   hasPhoto?: boolean;
+  /** Prefill «Кому?» from Gift Hub */
+  initialRecipient?: string;
   onScenarioChange?: (id: ScenarioId) => void;
   onComplete: (payload: {
     scenarioId: ScenarioId;
@@ -35,18 +38,27 @@ export function ScenarioWizard({
   scenarioId,
   query,
   hasPhoto = false,
+  initialRecipient,
   onScenarioChange,
   onComplete,
 }: ScenarioWizardProps) {
+  const seed = useMemo(
+    () =>
+      initialRecipient?.trim()
+        ? ({ recipient: initialRecipient.trim() } as Partial<ScenarioAnswers>)
+        : undefined,
+    [initialRecipient],
+  );
+
   const [state, setState] = useState<ScenarioFlowState>(() =>
-    createFlowState(scenarioId),
+    createSeededFlowState(scenarioId, seed),
   );
   const [textDraft, setTextDraft] = useState("");
 
   useEffect(() => {
-    setState(createFlowState(scenarioId));
+    setState(createSeededFlowState(scenarioId, seed));
     setTextDraft("");
-  }, [scenarioId]);
+  }, [scenarioId, seed]);
 
   const def = getScenarioDefinition(state.scenarioId);
   const step = getCurrentStep(state);

@@ -3,7 +3,7 @@ import Link from "next/link";
 import { PurchasesPageClient } from "../../components/purchases-page-client";
 
 export const metadata: Metadata = {
-  title: "Закупки — AI Gift",
+  title: "Закупки — Gift",
   description:
     "Список закупок: позиции ниже минимума на складе добавляются автоматически.",
 };
@@ -20,7 +20,7 @@ export default function PurchasesPage() {
         <div className="mb-8 flex flex-wrap items-center justify-between gap-4">
           <div>
             <p className="font-[family-name:var(--font-unbounded)] text-lg font-semibold text-[var(--accent)]">
-              AI Gift · Закупки
+              Gift · Закупки
             </p>
             <h1 className="mt-2 font-[family-name:var(--font-unbounded)] text-4xl font-semibold sm:text-5xl">
               Список закупок

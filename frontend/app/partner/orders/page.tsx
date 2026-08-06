@@ -3,7 +3,7 @@ import { PartnerPortalOrders } from "../../../components/partner-portal-orders";
 
 export const metadata: Metadata = {
   title: "Мои заказы — Partner Portal",
-  description: "Производственные заказы партнёра AI Gift.",
+  description: "Производственные заказы партнёра Gift.",
 };
 
 export default function PartnerOrdersPage() {

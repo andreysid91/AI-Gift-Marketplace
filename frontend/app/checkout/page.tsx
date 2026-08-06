@@ -1,4 +1,4 @@
-import { CheckoutForm } from "../../components/checkout-form";
+import { GiftCheckoutExperience } from "../../components/gift-checkout/gift-checkout-experience";
 
 type CheckoutPageProps = {
   searchParams: Promise<{
@@ -12,7 +12,7 @@ type CheckoutPageProps = {
 export default async function CheckoutPage({ searchParams }: CheckoutPageProps) {
   const { id, from, q, recipient } = await searchParams;
   return (
-    <CheckoutForm
+    <GiftCheckoutExperience
       productId={id}
       fromGift={from === "gift"}
       giftQuery={q}

@@ -4,7 +4,7 @@ import { DeliveryPageClient } from "../../components/delivery-page-client";
 import { DELIVERY_METHODS, formatDeliveryMoney } from "../../lib/delivery";
 
 export const metadata: Metadata = {
-  title: "Доставка — AI Gift",
+  title: "Доставка — Gift",
   description:
     "Способы доставки: самовывоз, курьер, Яндекс, СДЭК, Почта России — стоимость, время, трек.",
 };
@@ -21,7 +21,7 @@ export default function DeliveryPage() {
         <div className="mb-8 flex flex-wrap items-center justify-between gap-4">
           <div>
             <p className="font-[family-name:var(--font-unbounded)] text-lg font-semibold text-[var(--accent)]">
-              AI Gift · Доставка
+              Gift · Доставка
             </p>
             <h1 className="mt-2 font-[family-name:var(--font-unbounded)] text-4xl font-semibold sm:text-5xl">
               Модуль доставки

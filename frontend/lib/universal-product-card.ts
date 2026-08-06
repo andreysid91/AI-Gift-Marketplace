@@ -112,8 +112,8 @@ export function resolveUniversalProductCard(
     leadTimeHours,
     leadTimeLabel: formatLeadTimeLabel(leadTimeHours),
     schema,
-    detailHref: `/configure?product=${encodeURIComponent(id)}`,
-  };
+  detailHref: `/gift?id=${encodeURIComponent(id)}`,
+};
 }
 
 export function listUniversalProductIds(): string[] {

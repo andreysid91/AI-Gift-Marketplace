@@ -4,9 +4,9 @@ import { PartnerCard } from "../../components/partner-card";
 import { PARTNERS } from "../../lib/partners";
 
 export const metadata: Metadata = {
-  title: "Партнёры — AI Gift",
+  title: "Партнёры — Gift",
   description:
-    "Производственные партнёры AI Gift: возможности, сроки, контакты и условия.",
+    "Производственные партнёры Gift: возможности, сроки, контакты и условия.",
 };
 
 export default function PartnersPage() {
@@ -27,7 +27,7 @@ export default function PartnersPage() {
 
         <header className="mt-8 max-w-3xl">
           <p className="font-[family-name:var(--font-unbounded)] text-2xl font-semibold text-[var(--accent)] sm:text-3xl">
-            AI Gift
+            Gift
           </p>
           <h1 className="mt-3 font-[family-name:var(--font-unbounded)] text-4xl font-semibold sm:text-5xl lg:text-6xl">
             Партнёры

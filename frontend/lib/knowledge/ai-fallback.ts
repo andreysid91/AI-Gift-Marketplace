@@ -213,7 +213,7 @@ async function callOpenAi(query: string): Promise<AiRecommendResult | null> {
         {
           role: "system",
           content:
-            "Ты подбираешь подарки только из переданного каталога AI Gift. Верни JSON: { chain: string[], productIds: string[], addonIds: string[], explanation: string }. Используй только id из каталога. Учитывай бюджет, если он есть в запросе. 1-3 productIds и 1-2 addonIds.",
+            "Ты подбираешь подарки только из переданного каталога Gift. Верни JSON: { chain: string[], productIds: string[], addonIds: string[], explanation: string }. Используй только id из каталога. Учитывай бюджет, если он есть в запросе. 1-3 productIds и 1-2 addonIds.",
         },
         {
           role: "user",

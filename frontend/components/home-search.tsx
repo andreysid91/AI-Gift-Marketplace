@@ -127,7 +127,7 @@ export function HomeSearch() {
         htmlFor="gift-search"
         className="mb-4 block font-[family-name:var(--font-unbounded)] text-4xl font-semibold leading-[1.05] tracking-tight text-[var(--foreground)] sm:text-5xl lg:text-6xl"
       >
-        Что хотите подарить?
+        Кому хотите сделать подарок?
       </label>
 
       <RecipientPicker

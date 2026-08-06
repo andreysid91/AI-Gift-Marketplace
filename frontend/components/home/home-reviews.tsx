@@ -1,68 +1,71 @@
-const REVIEWS = [
-  {
-    name: "Марина",
-    emotion: "В восторге",
-    gift: "Кружка папе",
-    emoji: "😍",
-    tone: "from-[#ffb4a2] via-[#ff8f6b] to-[#ff5a3c]",
-  },
-  {
-    name: "Игорь",
-    emotion: "Слёзы счастья",
-    gift: "Холст жене",
-    emoji: "🥹",
-    tone: "from-[#f7b6c8] via-[#ef7a9a] to-[#e84d6f]",
-  },
-  {
-    name: "Анна",
-    emotion: "Команда в шоке",
-    gift: "Welcome-box",
-    emoji: "🤩",
-    tone: "from-[#9de7c8] via-[#5cc9a0] to-[#3db88a]",
-  },
-  {
-    name: "Дмитрий",
-    emotion: "Идеально",
-    gift: "Футболки на тираж",
-    emoji: "🔥",
-    tone: "from-[#ffd59a] via-[#ffb35c] to-[#ff9f43]",
-  },
-] as const;
+import Link from "next/link";
+import { getShowcaseReviews } from "../../lib/showcase-orders";
 
-export function HomeReviews() {
+type HomeReviewsProps = {
+  hideTitle?: boolean;
+};
+
+export function HomeReviews({ hideTitle = false }: HomeReviewsProps) {
+  const reviews = getShowcaseReviews();
+
   return (
-    <section>
-      <h2 className="font-[family-name:var(--font-unbounded)] text-3xl font-semibold sm:text-4xl">
-        Отзывы
-      </h2>
-
-      <ul className="mt-6 grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
-        {REVIEWS.map((review, index) => (
-          <li
-            key={review.name}
-            className="overflow-hidden rounded-[32px] bg-white shadow-[var(--shadow-soft)]"
-            style={{
-              animation: `fade-rise 0.55s ease-out ${index * 70}ms both`,
-            }}
+    <section id="reviews">
+      {!hideTitle ? (
+        <div className="flex flex-wrap items-end justify-between gap-3">
+          <div>
+            <h2 className="font-[family-name:var(--font-unbounded)] text-3xl font-semibold sm:text-4xl">
+              Популярные отзывы
+            </h2>
+            <p className="mt-2 text-base font-bold text-[var(--muted)]">
+              Нажмите — откроется страница этого подарка
+            </p>
+          </div>
+          <Link
+            href="/reviews"
+            className="font-extrabold text-[var(--accent)] hover:underline"
           >
-            <div
-              className={`relative flex h-56 items-center justify-center bg-gradient-to-br ${review.tone} sm:h-64`}
+            Все отзывы →
+          </Link>
+        </div>
+      ) : null}
+
+      <ul
+        className={`grid gap-4 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-5 ${hideTitle ? "" : "mt-6"}`}
+      >
+        {reviews.map((review, index) => (
+          <li key={review.id} className="min-w-0">
+            <Link
+              href={review.giftHref}
+              className="flex h-full flex-col overflow-hidden rounded-[28px] bg-white shadow-[var(--shadow-soft)] transition hover:-translate-y-0.5 hover:shadow-[var(--shadow)]"
+              style={{
+                animation: `fade-rise 0.55s ease-out ${index * 60}ms both`,
+              }}
             >
-              <span className="text-8xl drop-shadow-sm sm:text-9xl" aria-hidden>
-                {review.emoji}
-              </span>
-              <span className="absolute bottom-4 left-4 rounded-[16px] bg-white/95 px-3 py-2 text-sm font-extrabold text-[var(--foreground)]">
-                {review.emotion}
-              </span>
-            </div>
-            <div className="px-5 py-4">
-              <p className="font-[family-name:var(--font-unbounded)] text-xl font-semibold">
-                {review.name}
-              </p>
-              <p className="mt-1 text-base font-bold text-[var(--muted)]">
-                {review.gift}
-              </p>
-            </div>
+              <div
+                className={`relative flex h-40 items-center justify-center bg-gradient-to-br ${review.tone} sm:h-44`}
+              >
+                <span className="text-6xl drop-shadow-sm sm:text-7xl" aria-hidden>
+                  {review.emoji}
+                </span>
+                <span className="absolute bottom-3 left-3 rounded-[14px] bg-white/95 px-2.5 py-1.5 text-xs font-extrabold sm:text-sm">
+                  {review.emotion}
+                </span>
+              </div>
+              <div className="flex flex-1 flex-col px-4 py-4">
+                <p className="font-[family-name:var(--font-unbounded)] text-lg font-semibold">
+                  {review.author}
+                </p>
+                <p className="mt-2 flex-1 text-sm font-bold leading-snug text-[var(--foreground)]">
+                  «{review.text}»
+                </p>
+                <p className="mt-3 text-sm font-bold text-[var(--muted)]">
+                  {review.giftTitle}
+                </p>
+                <p className="mt-2 text-sm font-extrabold text-[var(--accent)]">
+                  К подарку →
+                </p>
+              </div>
+            </Link>
           </li>
         ))}
       </ul>
