@@ -101,6 +101,7 @@ export function GiftCheckoutExperience({
   );
 
   const [ready, setReady] = useState(false);
+  const [emptyCart, setEmptyCart] = useState(false);
   const [step, setStep] = useState<GiftCheckoutStepId>("verify");
   const [draft, setDraft] = useState<GiftCheckoutDraft | null>(null);
   const [submitting, setSubmitting] = useState(false);
@@ -117,29 +118,32 @@ export function GiftCheckoutExperience({
       phone: session?.phone ?? "",
     };
 
+    const order = loadGiftOrder();
+    const hasOrder = Boolean(order && order.items.length > 0);
+    const hasProduct = Boolean(productId?.trim());
+
+    if (fromGift && !hasOrder && !hasProduct) {
+      setEmptyCart(true);
+      setDraft(null);
+      setReady(true);
+      return;
+    }
+
+    setEmptyCart(false);
+
     let next: GiftCheckoutDraft;
-    if (fromGift) {
-      const order = loadGiftOrder();
-      if (order && order.items.length > 0) {
-        next = createDraftFromGiftOrder(order, contact);
-        if (giftQuery) next = { ...next, query: giftQuery || next.query };
-      } else {
-        next = createDraftFromIdea({
-          id: productId || idea.id,
-          title: idea.title,
-          price: idea.price,
-          emoji: idea.emoji,
-          query: giftQuery || idea.title,
-          contact,
-        });
-      }
+    if (hasOrder && order) {
+      next = createDraftFromGiftOrder(order, contact);
+      if (giftQuery) next = { ...next, query: giftQuery || next.query };
     } else {
+      const ideaMatch =
+        MOCK_IDEAS.find((item) => item.id === productId) ?? idea;
       next = createDraftFromIdea({
-        id: productId || idea.id,
-        title: idea.title,
-        price: idea.price,
-        emoji: idea.emoji,
-        query: giftQuery || idea.title,
+        id: productId || ideaMatch.id,
+        title: ideaMatch.title,
+        price: ideaMatch.price,
+        emoji: ideaMatch.emoji,
+        query: giftQuery || ideaMatch.title,
         contact,
       });
     }
@@ -331,7 +335,7 @@ export function GiftCheckoutExperience({
     router.push(`/success?${params.toString()}`);
   }
 
-  if (!ready || !draft || !pricing) {
+  if (!ready) {
     return (
       <main className="flex min-h-screen items-center justify-center bg-[var(--background)] font-bold text-[var(--muted)]">
         Загрузка оформления…
@@ -339,13 +343,48 @@ export function GiftCheckoutExperience({
     );
   }
 
+  if (emptyCart || !draft || !pricing) {
+    return (
+      <main className="relative min-h-screen overflow-x-hidden">
+        <div
+          aria-hidden
+          className="pointer-events-none absolute inset-0 bg-[linear-gradient(180deg,#fff4ec_0%,#ffe8da_55%,#fff1e8_100%)]"
+        />
+        <div className="relative z-10 mx-auto flex min-h-screen max-w-lg flex-col justify-center px-5 py-10">
+          <div className="rounded-[28px] bg-white p-8 shadow-[var(--shadow)]">
+            <h1 className="font-[family-name:var(--font-unbounded)] text-3xl font-semibold">
+              Корзина пуста
+            </h1>
+            <p className="mt-3 text-base font-bold text-[var(--muted)]">
+              Выберите подарок ещё раз — затем оформите заказ.
+            </p>
+            <div className="mt-6 flex flex-wrap gap-3">
+              <Link
+                href={productId ? `/gift?id=${encodeURIComponent(productId)}` : "/"}
+                className="rounded-[22px] bg-[var(--accent)] px-6 py-3 font-extrabold text-white"
+              >
+                К подаркам
+              </Link>
+              <Link
+                href="/popular"
+                className="rounded-[22px] border-2 border-[var(--line)] px-6 py-3 font-extrabold"
+              >
+                Популярное
+              </Link>
+            </div>
+          </div>
+        </div>
+      </main>
+    );
+  }
+
   const fieldClass =
     "mt-2 w-full rounded-[22px] border-2 border-[var(--line)] bg-white px-5 py-4 text-lg font-bold outline-none transition placeholder:text-[var(--muted)] focus:border-[var(--accent)]";
 
-  const backHref = fromGift
-    ? `/ideas?q=${encodeURIComponent(draft.query || giftQuery || "")}`
-    : productId
-      ? `/gift?id=${productId}`
+  const backHref = productId
+    ? `/gift?id=${encodeURIComponent(productId)}`
+    : fromGift
+      ? `/ideas?q=${encodeURIComponent(draft.query || giftQuery || "")}`
       : "/";
 
   return (
@@ -430,8 +469,8 @@ export function GiftCheckoutExperience({
                   ))}
                 </ul>
                 <p className="text-sm font-bold text-[var(--muted)]">
-                  Дальше — упаковка, открытка и поздравление. Цена обновится на
-                  каждом шаге.
+                  Дальше — упаковка, открытка и поздравление. Оплаты на сайте нет:
+                  отправите заявку, мы свяжемся и подтвердим заказ.
                 </p>
               </div>
             ) : null}

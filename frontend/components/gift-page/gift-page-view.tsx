@@ -1,7 +1,8 @@
 "use client";
 
+import Image from "next/image";
 import Link from "next/link";
-import { useRouter } from "next/navigation";
+import { useRouter, useSearchParams } from "next/navigation";
 import { useMemo, useState } from "react";
 import {
   calculateConfigurationPrice,
@@ -24,6 +25,7 @@ type GiftPageViewProps = {
 
 export function GiftPageView({ model }: GiftPageViewProps) {
   const router = useRouter();
+  const searchParams = useSearchParams();
   const b = model.blocks;
 
   const [mediaIndex, setMediaIndex] = useState(0);
@@ -76,8 +78,11 @@ export function GiftPageView({ model }: GiftPageViewProps) {
         kind: "addon" as const,
       }));
 
+    const slotLabel =
+      model.slots.find((s) => s.id === slotId)?.label ?? "Без слота";
+
     saveGiftOrder({
-      query: model.title,
+      query: `${model.title} · готовность: ${slotLabel}`,
       items: [
         {
           id: model.productId,
@@ -87,8 +92,10 @@ export function GiftPageView({ model }: GiftPageViewProps) {
           kind: "product",
           qty: priced.qty,
           unitPrice: priced.unitPrice,
-          configSummary: priced.summary,
-          selections: priced.selections,
+          configSummary: [priced.summary, `Срок: ${slotLabel}`]
+            .filter(Boolean)
+            .join(" · "),
+          selections: { ...priced.selections, slot: slotId },
         },
         ...addonLines,
       ],
@@ -104,6 +111,16 @@ export function GiftPageView({ model }: GiftPageViewProps) {
     router.push(`/checkout?${params.toString()}`);
   }
 
+  const from = searchParams.get("from");
+  const backHref =
+    from === "ideas"
+      ? `/ideas${searchParams.get("q") ? `?q=${encodeURIComponent(searchParams.get("q")!)}` : ""}`
+      : from === "popular"
+        ? "/popular"
+        : from === "reviews"
+          ? "/reviews"
+          : "/";
+
   return (
     <main className="relative min-h-screen overflow-x-hidden">
       <div
@@ -111,12 +128,12 @@ export function GiftPageView({ model }: GiftPageViewProps) {
         className="pointer-events-none absolute inset-0 bg-[linear-gradient(180deg,#fff4ec_0%,#ffe8da_50%,#fff1e8_100%)]"
       />
 
-      <div className="relative z-10 mx-auto w-full max-w-6xl px-5 py-6 sm:px-8 sm:py-10">
+      <div className="relative z-10 mx-auto w-full max-w-6xl px-5 py-6 pb-28 sm:px-8 sm:py-10 sm:pb-32">
         <Link
-          href="/ideas"
+          href={backHref}
           className="inline-flex text-base font-extrabold text-[var(--accent)] hover:underline"
         >
-          ← К идеям
+          ← Назад
         </Link>
 
         {/* 1–4 Media + hero */}
@@ -126,12 +143,27 @@ export function GiftPageView({ model }: GiftPageViewProps) {
               <div
                 className={`relative flex min-h-[300px] items-center justify-center overflow-hidden rounded-[36px] bg-gradient-to-br ${activeMedia.tone} shadow-[var(--shadow)] sm:min-h-[420px]`}
               >
-                <span className="text-9xl drop-shadow-sm" aria-hidden>
-                  {activeMedia.emoji}
-                </span>
+                {activeMedia.imageUrl ? (
+                  <Image
+                    src={activeMedia.imageUrl}
+                    alt={activeMedia.label ?? model.title}
+                    fill
+                    className="object-cover"
+                    sizes="(max-width: 1024px) 100vw, 50vw"
+                    priority={mediaIndex === 0}
+                  />
+                ) : (
+                  <span className="text-9xl drop-shadow-sm" aria-hidden>
+                    {activeMedia.emoji}
+                  </span>
+                )}
                 {activeMedia.kind === "video" ? (
                   <span className="absolute bottom-4 left-4 rounded-[14px] bg-white/95 px-3 py-2 text-sm font-extrabold">
-                    Видео · скоро
+                    Превью вручения · скоро видео
+                  </span>
+                ) : activeMedia.label ? (
+                  <span className="absolute bottom-4 left-4 rounded-[14px] bg-white/95 px-3 py-2 text-sm font-extrabold">
+                    {activeMedia.label}
                   </span>
                 ) : null}
               </div>
@@ -141,14 +173,24 @@ export function GiftPageView({ model }: GiftPageViewProps) {
                     key={item.id}
                     type="button"
                     onClick={() => setMediaIndex(index)}
-                    className={`flex size-16 shrink-0 items-center justify-center rounded-[18px] bg-gradient-to-br ${item.tone} text-2xl transition ${
+                    className={`relative flex size-16 shrink-0 items-center justify-center overflow-hidden rounded-[18px] bg-gradient-to-br ${item.tone} text-2xl transition ${
                       index === mediaIndex
                         ? "ring-2 ring-[var(--accent)] ring-offset-2"
                         : "opacity-80 hover:opacity-100"
                     }`}
                     aria-label={item.label ?? `Медиа ${index + 1}`}
                   >
-                    {item.emoji}
+                    {item.imageUrl ? (
+                      <Image
+                        src={item.imageUrl}
+                        alt={item.label ?? ""}
+                        fill
+                        className="object-cover"
+                        sizes="64px"
+                      />
+                    ) : (
+                      item.emoji
+                    )}
                   </button>
                 ))}
               </div>
@@ -158,7 +200,7 @@ export function GiftPageView({ model }: GiftPageViewProps) {
           {b.hero ? (
             <div>
               <p className="text-sm font-extrabold uppercase tracking-wide text-[var(--muted)]">
-                Gift Page
+                Подарок
               </p>
               <h1 className="mt-2 font-[family-name:var(--font-unbounded)] text-4xl font-semibold leading-tight sm:text-5xl">
                 {model.title}
@@ -258,7 +300,7 @@ export function GiftPageView({ model }: GiftPageViewProps) {
         ) : null}
 
         {b.giftScore ? (
-          <Section title="Gift Score">
+          <Section title="Рейтинг">
             <GiftScoreBadge metrics={metrics} />
           </Section>
         ) : null}
@@ -431,7 +473,7 @@ export function GiftPageView({ model }: GiftPageViewProps) {
               ))}
             </div>
             <p className="mt-3 text-sm font-bold text-[var(--muted)]">
-              Пока mock · скоро реальные фото
+              Фото от клиентов после вручения
             </p>
           </Section>
         ) : null}
@@ -450,7 +492,9 @@ export function GiftPageView({ model }: GiftPageViewProps) {
                   <p className="mt-3 font-[family-name:var(--font-unbounded)] text-xl font-semibold">
                     {video.title}
                   </p>
-                  <p className="mt-1 text-sm font-bold text-white/70">Mock</p>
+                  <p className="mt-1 text-sm font-bold text-white/70">
+                    Момент вручения
+                  </p>
                 </div>
               ))}
             </div>
@@ -543,7 +587,7 @@ export function GiftPageView({ model }: GiftPageViewProps) {
           </Section>
         ) : null}
 
-        <div className="sticky bottom-4 z-20 mt-10 flex justify-center pb-6">
+        <div className="sticky bottom-4 z-20 mt-10 flex justify-center pb-[max(1.5rem,env(safe-area-inset-bottom))]">
           <button
             type="button"
             onClick={orderNow}

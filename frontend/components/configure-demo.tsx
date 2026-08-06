@@ -1,5 +1,6 @@
 "use client";
 
+import { useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
 import { UniversalProductCard } from "./universal-product-card";
 import {
@@ -8,9 +9,20 @@ import {
 } from "../lib/product-configurator";
 import { loadDesignPick, type DesignPickPayload } from "../lib/design-studio";
 import { formatRub } from "../lib/scenario-catalog";
+import { saveGiftOrder } from "../lib/gift-order";
 
 type ConfigureDemoProps = {
   initialProductId?: string;
+};
+
+const PRODUCT_LABELS: Record<string, string> = {
+  tee: "Футболка",
+  mug: "Кружка",
+  canvas: "Холст",
+  puzzle: "Пазл",
+  magnet: "Магнит",
+  candle: "Свеча",
+  box: "Коробка",
 };
 
 const DEMO_IDS = [
@@ -21,6 +33,7 @@ const DEMO_IDS = [
 ];
 
 export function ConfigureDemo({ initialProductId = "tee" }: ConfigureDemoProps) {
+  const router = useRouter();
   const [design, setDesign] = useState<DesignPickPayload | null>(null);
   const [cart, setCart] = useState<PricedConfiguration[]>([]);
   const [focusId, setFocusId] = useState(initialProductId);
@@ -31,6 +44,32 @@ export function ConfigureDemo({ initialProductId = "tee" }: ConfigureDemoProps) 
 
   const total = cart.reduce((sum, line) => sum + line.lineTotal, 0);
   const ids = [...new Set(DEMO_IDS)];
+
+  function checkout() {
+    if (cart.length === 0) return;
+    saveGiftOrder({
+      query: cart.map((c) => c.title).join(" + "),
+      items: cart.map((line) => ({
+        id: line.productId,
+        title: line.title,
+        price: line.lineTotal,
+        emoji: line.emoji,
+        kind: "product" as const,
+        qty: line.qty,
+        unitPrice: line.unitPrice,
+        configSummary: line.summary,
+        selections: line.selections,
+      })),
+      total,
+      createdAt: new Date().toISOString(),
+    });
+    const params = new URLSearchParams({
+      from: "gift",
+      id: cart[0].productId,
+      q: cart[0].title,
+    });
+    router.push(`/checkout?${params.toString()}`);
+  }
 
   return (
     <div className="space-y-8">
@@ -54,10 +93,10 @@ export function ConfigureDemo({ initialProductId = "tee" }: ConfigureDemoProps) 
 
       <div>
         <h2 className="font-[family-name:var(--font-unbounded)] text-2xl font-semibold">
-          Universal Product Card
+          Параметры изделия
         </h2>
         <p className="mt-1 text-base font-bold text-[var(--muted)]">
-          Одна карточка · любые товары · цена сразу
+          Выберите товар · цена сразу
         </p>
       </div>
 
@@ -73,7 +112,7 @@ export function ConfigureDemo({ initialProductId = "tee" }: ConfigureDemoProps) 
                 : "border-[var(--line)] bg-white"
             }`}
           >
-            {id}
+            {PRODUCT_LABELS[id] ?? id}
           </button>
         ))}
       </div>
@@ -103,7 +142,7 @@ export function ConfigureDemo({ initialProductId = "tee" }: ConfigureDemoProps) 
       {cart.length > 0 ? (
         <div className="rounded-[24px] bg-[var(--foreground)] px-6 py-5 text-white">
           <p className="text-sm font-extrabold uppercase tracking-wide text-white/70">
-            Добавлено · {cart.length}
+            В заказе · {cart.length}
           </p>
           <ul className="mt-3 space-y-1 text-sm font-bold text-white/90">
             {cart.map((line, i) => (
@@ -116,6 +155,13 @@ export function ConfigureDemo({ initialProductId = "tee" }: ConfigureDemoProps) 
           <p className="mt-4 font-[family-name:var(--font-unbounded)] text-3xl font-semibold">
             {formatRub(total)}
           </p>
+          <button
+            type="button"
+            onClick={checkout}
+            className="mt-5 w-full rounded-[20px] bg-[var(--accent)] px-6 py-4 text-lg font-extrabold text-white"
+          >
+            Оформить заказ
+          </button>
         </div>
       ) : null}
     </div>

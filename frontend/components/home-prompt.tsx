@@ -51,8 +51,9 @@ export function HomePrompt() {
       />
 
       {photoName ? (
-        <p className="mt-2 text-sm font-bold text-[var(--mint)]">
-          Фото: {photoName}
+        <p className="mt-2 text-sm font-bold text-[var(--muted)]">
+          Файл «{photoName}» отмечен для заказа. Сам файл передадите при
+          оформлении / в переписке.
         </p>
       ) : null}
 

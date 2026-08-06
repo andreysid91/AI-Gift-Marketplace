@@ -21,7 +21,7 @@ export const STEP_META: Record<
   verify: {
     index: 1,
     title: "Проверка подарка",
-    hint: "Убедитесь, что состав верный",
+    hint: "Состав верный? Оплаты на сайте нет — заявка, затем подтверждение",
   },
   packaging: {
     index: 2,

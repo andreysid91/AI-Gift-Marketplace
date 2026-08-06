@@ -17,7 +17,7 @@ export const GIFT_HUB_NAV: GiftHubNavItem[] = [
   { id: "business", label: "Для бизнеса", href: "/business" },
   { id: "popular", label: "Популярное", href: "/popular" },
   { id: "reviews", label: "Отзывы", href: "/reviews" },
-  { id: "inspiration", label: "Вдохновение", href: "/inspiration" },
+  { id: "about", label: "О проекте", href: "/#about" },
 ];
 
 export type HubRecipientCard = {
@@ -194,7 +194,13 @@ export const HUB_RECIPIENTS_ALL_HREF = "/create?scenario=gift";
 export function isGiftHubPathActive(
   pathname: string,
   href: string,
+  hash = "",
 ): boolean {
+  if (href.includes("#")) {
+    const [path, fragment] = href.split("#");
+    const base = path || "/";
+    return pathname === base && hash.replace(/^#/, "") === fragment;
+  }
   if (href === "/") return pathname === "/";
   return pathname === href || pathname.startsWith(`${href}/`);
 }

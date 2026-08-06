@@ -22,10 +22,10 @@ export default async function ConfigurePage({ searchParams }: Props) {
           ← Gift
         </Link>
         <h1 className="mt-8 font-[family-name:var(--font-unbounded)] text-4xl font-semibold sm:text-5xl">
-          Universal Product Card
+          Настроить изделие
         </h1>
         <p className="mt-3 max-w-xl text-lg font-bold text-[var(--muted)]">
-          Одна карточка для любого товара — параметры и цена сразу.
+          Параметры и цена сразу — затем можно оформить заказ.
         </p>
         <div className="mt-10">
           <ConfigureDemo initialProductId={product ?? "tee"} />

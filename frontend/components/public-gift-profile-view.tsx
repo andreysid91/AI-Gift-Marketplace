@@ -127,7 +127,7 @@ export function PublicGiftProfileView({ slug }: PublicGiftProfileViewProps) {
             </div>
             <div className="text-center sm:pb-1 sm:text-left">
               <p className="text-sm font-extrabold uppercase tracking-wide text-[var(--muted)]">
-                Gift Profile
+                Профиль подарков
               </p>
               <h1 className="mt-1 font-[family-name:var(--font-unbounded)] text-4xl font-semibold sm:text-5xl">
                 {publicProfile.displayName}

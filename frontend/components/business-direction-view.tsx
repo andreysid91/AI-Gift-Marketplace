@@ -1,5 +1,6 @@
 "use client";
 
+import { useRouter } from "next/navigation";
 import { useRef, useState, type ChangeEvent } from "react";
 
 const PRODUCTS = [
@@ -20,29 +21,39 @@ const PRODUCTS = [
 const QUANTITIES = ["10", "30", "50", "100", "500", "1000+"] as const;
 
 export function BusinessDirectionView() {
+  const router = useRouter();
   const logoRef = useRef<HTMLInputElement>(null);
   const [products, setProducts] = useState<string[]>([]);
   const [quantity, setQuantity] = useState<string | null>(null);
   const [logoName, setLogoName] = useState<string | null>(null);
-  const [submitted, setSubmitted] = useState(false);
 
   function toggleProduct(title: string) {
     setProducts((prev) =>
       prev.includes(title) ? prev.filter((item) => item !== title) : [...prev, title],
     );
-    setSubmitted(false);
   }
 
   function onLogoChange(event: ChangeEvent<HTMLInputElement>) {
     const file = event.target.files?.[0];
     if (!file) return;
     setLogoName(file.name);
-    setSubmitted(false);
   }
 
   function onSubmit() {
     if (products.length === 0 || !quantity) return;
-    setSubmitted(true);
+    const q = [
+      "Корпоративный заказ",
+      products.join(", "),
+      `тираж ${quantity}`,
+      logoName ? `логотип ${logoName}` : "",
+    ]
+      .filter(Boolean)
+      .join(". ");
+    const params = new URLSearchParams({
+      scenario: "corporate",
+      q,
+    });
+    router.push(`/create?${params.toString()}`);
   }
 
   const canSubmit = products.length > 0 && quantity !== null;
@@ -101,7 +112,6 @@ export function BusinessDirectionView() {
                 type="button"
                 onClick={() => {
                   setQuantity(value);
-                  setSubmitted(false);
                 }}
                 className={`min-w-[88px] rounded-[20px] px-5 py-4 font-[family-name:var(--font-unbounded)] text-xl font-semibold transition duration-200 sm:min-w-[100px] sm:text-2xl ${
                   active
@@ -163,29 +173,18 @@ export function BusinessDirectionView() {
           disabled={!canSubmit}
           className="w-full rounded-[28px] bg-[var(--mint)] px-8 py-5 text-xl font-extrabold text-white shadow-[var(--shadow)] transition duration-200 hover:-translate-y-0.5 hover:brightness-105 active:translate-y-0 disabled:pointer-events-none disabled:opacity-45 sm:w-auto sm:min-w-[320px] sm:px-12 sm:py-6 sm:text-2xl"
         >
-          Получить расчет
+          Получить расчёт
         </button>
 
         {!canSubmit ? (
           <p className="mt-4 text-base font-bold text-[var(--muted)]">
             Выберите продукцию и тираж
           </p>
-        ) : null}
-
-        {submitted ? (
-          <div className="animate-fade-rise mt-5 max-w-xl rounded-[24px] bg-white px-5 py-4 shadow-[var(--shadow-soft)]">
-            <p className="font-[family-name:var(--font-unbounded)] text-lg font-semibold text-[var(--mint)]">
-              Заявка сформирована
-            </p>
-            <p className="mt-1 text-base font-bold text-[var(--muted)]">
-              {products.join(", ")} · тираж {quantity}
-              {logoName ? ` · логотип: ${logoName}` : ""}
-            </p>
-            <p className="mt-2 text-sm font-bold text-[var(--muted)]">
-              Пока демо — расчёт отправим после подключения заявок.
-            </p>
-          </div>
-        ) : null}
+        ) : (
+          <p className="mt-4 text-base font-bold text-[var(--muted)]">
+            Откроем сценарий для бизнеса с вашим составом заказа
+          </p>
+        )}
       </section>
     </>
   );

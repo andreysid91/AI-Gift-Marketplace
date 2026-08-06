@@ -12,8 +12,12 @@ const EXAMPLES = [
 
 type AttachKey = "photos" | "logo" | "example";
 
-export function IdeaForm() {
-  const [idea, setIdea] = useState("");
+type IdeaFormProps = {
+  initialIdea?: string;
+};
+
+export function IdeaForm({ initialIdea = "" }: IdeaFormProps) {
+  const [idea, setIdea] = useState(initialIdea);
   const [sent, setSent] = useState(false);
   const [files, setFiles] = useState<Record<AttachKey, string | null>>({
     photos: null,
@@ -44,6 +48,22 @@ export function IdeaForm() {
   function onSubmit(event: FormEvent<HTMLFormElement>) {
     event.preventDefault();
     if (!idea.trim()) return;
+    try {
+      const leads = JSON.parse(
+        localStorage.getItem("gift-contact-leads") || "[]",
+      ) as unknown[];
+      leads.unshift({
+        idea: idea.trim(),
+        files,
+        createdAt: new Date().toISOString(),
+      });
+      localStorage.setItem(
+        "gift-contact-leads",
+        JSON.stringify(leads.slice(0, 50)),
+      );
+    } catch {
+      /* ignore */
+    }
     setSent(true);
   }
 
@@ -57,11 +77,19 @@ export function IdeaForm() {
           ✓
         </div>
         <h2 className="mt-8 font-[family-name:var(--font-unbounded)] text-4xl font-semibold text-[var(--foreground)] sm:text-5xl">
-          Спасибо
+          Заявку сохранили
         </h2>
         <p className="mx-auto mt-5 max-w-lg text-xl font-bold leading-snug text-[var(--muted)] sm:text-2xl">
-          Мы подготовим варианты реализации и свяжемся с вами.
+          Текст идеи записан. Файлы на этом шаге не загружаются на сервер —
+          при необходимости приложите их в переписке. Мы свяжемся по контактам,
+          если оставите их в кабинете или Telegram.
         </p>
+        <a
+          href="/create?scenario=custom"
+          className="mt-8 inline-flex rounded-[22px] bg-[var(--accent)] px-6 py-3 font-extrabold text-white"
+        >
+          Или подобрать варианты сейчас
+        </a>
       </div>
     );
   }

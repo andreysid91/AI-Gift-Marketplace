@@ -24,7 +24,7 @@ export function GiftScoreBadge({
           {starsRow(metrics.stars)}
         </span>
         <span className="rounded-[12px] bg-[var(--accent-soft)] px-2.5 py-1 text-sm font-extrabold text-[var(--accent)]">
-          Score {metrics.score}
+          {metrics.score}
         </span>
       </div>
     );
@@ -37,7 +37,7 @@ export function GiftScoreBadge({
       <div className="flex flex-wrap items-end justify-between gap-3">
         <div>
           <p className="text-sm font-extrabold uppercase tracking-wide text-[var(--muted)]">
-            Gift Score
+            Рейтинг
           </p>
           <p
             className="mt-1 text-2xl tracking-wide text-[var(--secondary)] sm:text-3xl"
@@ -46,7 +46,7 @@ export function GiftScoreBadge({
             {starsRow(metrics.stars)}
           </p>
           <p className="mt-1 text-sm font-bold text-[var(--muted)]">
-            {metrics.stars.toFixed(1)} · индекс {metrics.score}/100
+            {metrics.stars.toFixed(1)} · {metrics.orders} заказов
           </p>
         </div>
       </div>

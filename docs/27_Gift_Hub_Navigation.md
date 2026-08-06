@@ -18,11 +18,13 @@
 | Подарки | `/gifts` | Направление «подарок» | ideas, create, categories |
 | Фотопечать | `/photo` | Каталог фотопечати | `/photo/[slug]`, create?scenario=photo |
 | Для бизнеса | `/business` | Корпоративный лендинг | create?scenario=corporate |
-| Популярное | `/popular` | Хиты + топ Gift Score | `/gift`, `/ratings`, create |
-| Отзывы | `/reviews` | Истории клиентов | ideas / create (похожий) |
-| Вдохновение | `/inspiration` | Идеи Inspiration Engine | create / design / ideas |
+| Популярное | `/popular` | Хиты + топ рейтинга | `/gift`, `/ratings`, create |
+| Отзывы | `/reviews` | Истории клиентов | gift page |
+| О проекте | `/#about` | Секция на главной | contact / reviews |
 
-Дополнительно в подвале: Связаться `/contact`, Кабинет `/account`.
+Дополнительно в подвале: Срочно `/express`, Отследить `/track`, Связаться `/contact`, Кабинет `/account`.
+
+Вдохновение `/inspiration` — вторичный хаб (из подвала/ссылок), не в основной шапке.
 
 Служебные зоны **без** Gift Hub: `/admin`, `/owner`, `/partner*`, `/warehouse`, `/delivery`.
 
@@ -61,20 +63,20 @@ flowchart TB
   Checkout["/checkout"]
   Success["/success · /track"]
 
-  Hub --> Home & Gifts & Photo & Biz & Pop & Rev & Insp
+  Hub --> Home & Gifts & Photo & Biz & Pop & Rev
   Home -->|Кому подарок| Create
   Gifts --> Ideas & Create
   Photo --> Create
   Biz --> Create
   Pop --> GiftPage & Create
   Rev --> Ideas & Create
-  Insp --> Create
   Create --> Ideas
   Ideas --> GiftPage
   GiftPage --> Checkout
   Checkout --> Success
 ```
 
+Вдохновение (`/inspiration`) — вне основной шапки, доступно из кабинета и прямых ссылок.
 ---
 
 ## 4. Вторичные маршруты (≤ 2 клика из Hub)

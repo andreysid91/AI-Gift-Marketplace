@@ -63,7 +63,7 @@ export function GiftProfileEditor() {
     return (
       <div className="rounded-[32px] bg-white p-8 shadow-[var(--shadow)]">
         <h1 className="font-[family-name:var(--font-unbounded)] text-3xl font-semibold">
-          Gift Profile
+          Профиль подарков
         </h1>
         <p className="mt-3 font-bold text-[var(--muted)]">
           Войдите, чтобы создать публичную страницу подарков.
@@ -139,7 +139,7 @@ export function GiftProfileEditor() {
     <div className="space-y-8">
       <header className="rounded-[32px] bg-white p-6 shadow-[var(--shadow)] sm:p-8">
         <p className="text-sm font-extrabold uppercase tracking-wide text-[var(--muted)]">
-          Gift Profile
+          Профиль подарков
         </p>
         <h1 className="mt-2 font-[family-name:var(--font-unbounded)] text-3xl font-semibold sm:text-4xl">
           Ваша публичная страница

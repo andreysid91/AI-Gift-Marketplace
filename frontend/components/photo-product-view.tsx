@@ -1,6 +1,8 @@
 "use client";
 
+import { useRouter } from "next/navigation";
 import { useRef, useState, type ChangeEvent } from "react";
+import { saveGiftOrder } from "../lib/gift-order";
 import type { PhotoProduct } from "../lib/photo-products";
 
 type PhotoProductViewProps = {
@@ -8,21 +10,43 @@ type PhotoProductViewProps = {
 };
 
 export function PhotoProductView({ product }: PhotoProductViewProps) {
+  const router = useRouter();
   const fileRef = useRef<HTMLInputElement>(null);
   const [fileName, setFileName] = useState<string | null>(null);
   const [size, setSize] = useState<string | null>(null);
-  const [submitted, setSubmitted] = useState(false);
 
   function onFileChange(event: ChangeEvent<HTMLInputElement>) {
     const file = event.target.files?.[0];
     if (!file) return;
     setFileName(file.name);
-    setSubmitted(false);
   }
 
   function onSubmit() {
     if (!fileName || !size) return;
-    setSubmitted(true);
+    const price = 1490;
+    saveGiftOrder({
+      query: `${product.title} · ${size} · фото: ${fileName}`,
+      items: [
+        {
+          id: product.slug,
+          title: `${product.title} (${size})`,
+          price,
+          emoji: product.icon,
+          kind: "product",
+          qty: 1,
+          unitPrice: price,
+          configSummary: `Формат ${size} · файл ${fileName}`,
+        },
+      ],
+      total: price,
+      createdAt: new Date().toISOString(),
+    });
+    const params = new URLSearchParams({
+      from: "gift",
+      id: product.slug,
+      q: product.title,
+    });
+    router.push(`/checkout?${params.toString()}`);
   }
 
   const canSubmit = Boolean(fileName && size);
@@ -70,10 +94,7 @@ export function PhotoProductView({ product }: PhotoProductViewProps) {
                 <button
                   key={value}
                   type="button"
-                  onClick={() => {
-                    setSize(value);
-                    setSubmitted(false);
-                  }}
+                  onClick={() => setSize(value)}
                   className={`rounded-[18px] px-5 py-3.5 text-base font-extrabold transition sm:text-lg ${
                     active
                       ? "bg-[#3b6fd8] text-white shadow-[var(--shadow)]"
@@ -93,55 +114,29 @@ export function PhotoProductView({ product }: PhotoProductViewProps) {
           disabled={!canSubmit}
           className="mt-10 w-full rounded-[24px] bg-[#3b6fd8] px-8 py-5 text-lg font-extrabold text-white shadow-[var(--shadow)] transition hover:brightness-110 disabled:pointer-events-none disabled:opacity-45 sm:w-auto sm:min-w-[280px]"
         >
-          Заказать {product.title.toLowerCase()}
+          Оформить {product.title.toLowerCase()}
         </button>
 
         {!canSubmit ? (
           <p className="mt-3 text-sm font-bold text-[var(--muted)]">
             Загрузите фото и выберите формат
           </p>
-        ) : null}
-
-        {submitted ? (
-          <div className="animate-fade-rise mt-5 rounded-[22px] bg-white px-5 py-4 shadow-[var(--shadow-soft)]">
-            <p className="font-[family-name:var(--font-unbounded)] text-lg font-semibold text-[#3b6fd8]">
-              Заявка готова
-            </p>
-            <p className="mt-1 text-base font-bold text-[var(--muted)]">
-              {product.title} · {size} · {fileName}
-            </p>
-            <p className="mt-2 text-sm font-bold text-[var(--muted)]">
-              Пока демо — без отправки на сервер.
-            </p>
-          </div>
-        ) : null}
+        ) : (
+          <p className="mt-3 text-sm font-bold text-[var(--muted)]">
+            Дальше — упаковка, открытка и контакты
+          </p>
+        )}
       </div>
 
-      <aside className={`rounded-[28px] p-6 shadow-[var(--shadow-soft)] sm:p-8 ${product.tone}`}>
-        <p className="text-sm font-extrabold uppercase tracking-wide opacity-75">
-          Срок
+      <aside
+        className={`rounded-[28px] p-6 shadow-[var(--shadow-soft)] sm:p-8 ${product.tone}`}
+      >
+        <p className="font-[family-name:var(--font-unbounded)] text-2xl font-semibold">
+          {product.title}
         </p>
-        <p className="mt-2 font-[family-name:var(--font-unbounded)] text-3xl font-semibold">
-          {product.leadTime}
-        </p>
-        <p className="mt-6 text-base font-extrabold leading-snug opacity-90 sm:text-lg">
+        <p className="mt-3 text-base font-bold leading-snug text-[var(--muted)]">
           {product.description}
         </p>
-        <ul className="mt-8 space-y-3">
-          {["Печать по вашему фото", "Проверка качества", "Аккуратная упаковка"].map(
-            (line) => (
-              <li key={line} className="flex items-center gap-3">
-                <span
-                  className="flex h-7 w-7 shrink-0 items-center justify-center rounded-full bg-white/80 text-sm font-black"
-                  aria-hidden
-                >
-                  ✓
-                </span>
-                <span className="text-base font-extrabold">{line}</span>
-              </li>
-            ),
-          )}
-        </ul>
       </aside>
     </div>
   );

@@ -20,6 +20,14 @@ export default function GiftsPage() {
     >
       <div className="mx-auto max-w-3xl">
         <HomePrompt />
+        <p className="mt-4 text-center">
+          <a
+            href="/express"
+            className="font-extrabold text-[var(--accent)] hover:underline"
+          >
+            ⚡ Нужно срочно — экспресс-доставка
+          </a>
+        </p>
       </div>
 
       <div className="mt-12">

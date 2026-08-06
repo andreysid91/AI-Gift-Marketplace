@@ -25,8 +25,8 @@ export default function InspirationHubPage() {
           Вдохновение
         </h1>
         <p className="mt-3 max-w-2xl text-lg font-bold text-[var(--muted)]">
-          Каждая идея ведёт к созданию похожего подарка. На Gift Page идеи
-          подбираются под контекст автоматически.
+          Каждая идея ведёт к созданию похожего подарка. На странице подарка
+          идеи подбираются под ваш выбор автоматически.
         </p>
 
         <section className="mt-10">
@@ -58,7 +58,7 @@ export default function InspirationHubPage() {
 
         <section className="mt-12">
           <h2 className="font-[family-name:var(--font-unbounded)] text-xl font-semibold">
-            Идеи Inspiration Engine
+            Идеи для похожего подарка
           </h2>
           <ul className="mt-6 grid gap-3 sm:grid-cols-2 lg:grid-cols-3">
             {INSPIRATION_CATALOG.map((idea) => (

@@ -10,7 +10,6 @@ import {
   formatPhoneDisplay,
   getEnabledProviders,
   loginWithGoogleMock,
-  loginWithReservedProvider,
   requestEmailLogin,
   requestPhoneLogin,
   type AuthProviderId,
@@ -25,7 +24,6 @@ type Step =
   | "google";
 
 type LoginPanelProps = {
-  /** Where to go after successful sign-in */
   redirectTo?: string;
   compact?: boolean;
 };
@@ -36,21 +34,11 @@ export function LoginPanel({
 }: LoginPanelProps) {
   const router = useRouter();
   const providers = useMemo(() => getEnabledProviders(), []);
-  const reserved = useMemo(
-    () =>
-      (
-        [
-          { id: "vk" as const, label: "VK" },
-          { id: "apple" as const, label: "Apple" },
-        ] as const
-      ),
-    [],
-  );
 
   const [step, setStep] = useState<Step>("choose");
   const [phone, setPhone] = useState("");
   const [email, setEmail] = useState("");
-  const [googleEmail, setGoogleEmail] = useState("demo.customer@gmail.com");
+  const [googleEmail, setGoogleEmail] = useState("");
   const [code, setCode] = useState("");
   const [demoHint, setDemoHint] = useState("");
   const [error, setError] = useState("");
@@ -91,9 +79,7 @@ export function LoginPanel({
       setError(result.message);
       return;
     }
-    setDemoHint(
-      `Демо-код: ${result.challenge.demoCode} (SMS-шлюз пока mock)`,
-    );
+    setDemoHint(result.challenge.demoCode);
     setPhone(result.challenge.phone);
     setStep("phone-code");
   }
@@ -119,7 +105,7 @@ export function LoginPanel({
       setError(result.message);
       return;
     }
-    setDemoHint(`Демо-код: ${result.challenge.demoCode}`);
+    setDemoHint(result.challenge.demoCode);
     setEmail(result.challenge.email);
     setStep("email-code");
   }
@@ -158,8 +144,8 @@ export function LoginPanel({
             Вход
           </h2>
           <p className="mt-2 text-base font-bold text-[var(--muted)]">
-            Без регистрации и пароля. Аккаунт создаётся автоматически при
-            первом заказе.
+            Без пароля. Аккаунт появляется после первого заказа — можно сразу
+            оформить подарок и войти позже.
           </p>
 
           <div className="mt-6 space-y-3">
@@ -179,7 +165,7 @@ export function LoginPanel({
                       : "✉️ Email"}
                   {provider.id === "phone" ? (
                     <span className="ml-2 text-sm font-extrabold text-[var(--accent)]">
-                      приоритет
+                      удобнее
                     </span>
                   ) : null}
                 </span>
@@ -192,20 +178,18 @@ export function LoginPanel({
 
           <div className="mt-5 border-t border-[var(--line)] pt-5">
             <p className="text-xs font-extrabold uppercase tracking-wide text-[var(--muted)]">
-              Позже
+              Скоро
             </p>
             <div className="mt-3 flex flex-wrap gap-2">
-              {reserved.map((item) => (
+              {(["VK", "Apple"] as const).map((label) => (
                 <button
-                  key={item.id}
+                  key={label}
                   type="button"
-                  onClick={() => {
-                    const result = loginWithReservedProvider(item.id);
-                    setError(result.ok ? "" : result.message);
-                  }}
-                  className="rounded-[16px] border border-dashed border-[var(--line)] px-4 py-2 text-sm font-extrabold text-[var(--muted)]"
+                  disabled
+                  title="Пока недоступно"
+                  className="cursor-not-allowed rounded-[16px] border border-dashed border-[var(--line)] px-4 py-2 text-sm font-extrabold text-[var(--muted)] opacity-60"
                 >
-                  {item.label}
+                  {label} · скоро
                 </button>
               ))}
             </div>
@@ -226,16 +210,16 @@ export function LoginPanel({
             ← Все способы
           </button>
           <h2 className="mt-4 font-[family-name:var(--font-unbounded)] text-2xl font-semibold">
-            Google
+            Вход через Google
           </h2>
           <p className="mt-2 text-sm font-bold text-[var(--muted)]">
-            Mock OAuth: укажите email, который был в заказе.
+            Укажите email из Google-аккаунта, который был в заказе.
           </p>
           <label
             htmlFor="auth-google"
             className="mt-5 block text-base font-extrabold"
           >
-            Google email
+            Email
           </label>
           <input
             id="auth-google"
@@ -246,7 +230,7 @@ export function LoginPanel({
             className={fieldClass}
           />
           <button type="submit" disabled={busy} className={btnPrimary}>
-            {busy ? "Входим…" : "Продолжить с Google"}
+            {busy ? "Входим…" : "Продолжить"}
           </button>
         </form>
       ) : null}
@@ -267,7 +251,7 @@ export function LoginPanel({
             Телефон
           </h2>
           <p className="mt-2 text-sm font-bold text-[var(--muted)]">
-            Пришлём SMS-код. Пароль не нужен.
+            Получите код для входа. Пароль не нужен.
           </p>
           <label htmlFor="auth-phone" className="mt-5 block text-base font-extrabold">
             Номер
@@ -303,14 +287,17 @@ export function LoginPanel({
             ← Изменить номер
           </button>
           <h2 className="mt-4 font-[family-name:var(--font-unbounded)] text-2xl font-semibold">
-            Код из SMS
+            Код подтверждения
           </h2>
           <p className="mt-2 text-sm font-bold text-[var(--muted)]">
-            Отправили на {formatPhoneDisplay(phone)}
+            Для {formatPhoneDisplay(phone)}
           </p>
           {demoHint ? (
-            <p className="mt-3 rounded-[16px] bg-[var(--mint-soft)] px-4 py-3 text-sm font-extrabold text-[var(--mint)]">
-              {demoHint}
+            <p className="mt-3 rounded-[16px] bg-[var(--surface-warm)] px-4 py-3 text-sm font-bold text-[var(--foreground)]">
+              Пока SMS не подключено — введите код{" "}
+              <span className="font-extrabold text-[var(--accent)]">
+                {demoHint}
+              </span>
             </p>
           ) : null}
           <label htmlFor="auth-sms" className="mt-5 block text-base font-extrabold">
@@ -383,14 +370,17 @@ export function LoginPanel({
             ← Изменить email
           </button>
           <h2 className="mt-4 font-[family-name:var(--font-unbounded)] text-2xl font-semibold">
-            Код из письма
+            Код подтверждения
           </h2>
           <p className="mt-2 text-sm font-bold text-[var(--muted)]">
-            Отправили на {email}
+            Для {email}
           </p>
           {demoHint ? (
-            <p className="mt-3 rounded-[16px] bg-[var(--mint-soft)] px-4 py-3 text-sm font-extrabold text-[var(--mint)]">
-              {demoHint}
+            <p className="mt-3 rounded-[16px] bg-[var(--surface-warm)] px-4 py-3 text-sm font-bold text-[var(--foreground)]">
+              Пока письма не уходят — введите код{" "}
+              <span className="font-extrabold text-[var(--accent)]">
+                {demoHint}
+              </span>
             </p>
           ) : null}
           <label htmlFor="auth-email-code" className="mt-5 block text-base font-extrabold">
@@ -418,11 +408,11 @@ export function LoginPanel({
 
       {step === "choose" || error.includes("первого заказа") ? (
         <p className="mt-5 text-sm font-bold text-[var(--muted)]">
-          Ещё нет аккаунта?{" "}
-          <Link href="/ideas" className="text-[var(--accent)] hover:underline">
-            Оформите заказ
+          Ещё нет заказов?{" "}
+          <Link href="/create?scenario=gift" className="text-[var(--accent)] hover:underline">
+            Оформите подарок
           </Link>
-          {" — "}регистрация произойдёт сама.
+          {" — "}вход появится после заявки.
         </p>
       ) : null}
     </div>

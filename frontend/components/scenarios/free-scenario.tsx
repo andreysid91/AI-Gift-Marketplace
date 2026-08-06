@@ -1,6 +1,7 @@
 "use client";
 
 import Link from "next/link";
+import { useRouter } from "next/navigation";
 import { useState } from "react";
 
 type FreeScenarioProps = {
@@ -8,21 +9,26 @@ type FreeScenarioProps = {
 };
 
 export function FreeScenario({ query }: FreeScenarioProps) {
+  const router = useRouter();
   const [details, setDetails] = useState("");
-  const [sent, setSent] = useState(false);
+
+  function contact() {
+    const text = [query, details].filter(Boolean).join("\n\n");
+    const params = new URLSearchParams();
+    if (text) params.set("idea", text);
+    router.push(`/contact${params.size ? `?${params.toString()}` : ""}`);
+  }
 
   return (
     <div className="mx-auto max-w-2xl pb-10 text-center">
       <p className="text-sm font-extrabold uppercase tracking-wide text-[var(--muted)]">
-        Сценарий · Свободный заказ
+        Свободный заказ
       </p>
       <h2 className="mt-3 font-[family-name:var(--font-unbounded)] text-3xl font-semibold leading-tight sm:text-4xl">
         Не нашли нужный вариант?
       </h2>
       <p className="mt-4 text-lg font-bold text-[var(--muted)] sm:text-xl">
-        Опишите подробнее или свяжитесь с нами.
-        <br />
-        Мы реализуем практически любую идею.
+        Опишите подробнее или напишите нам — подберём реализацию.
       </p>
 
       {query ? (
@@ -41,17 +47,11 @@ export function FreeScenario({ query }: FreeScenarioProps) {
 
       <button
         type="button"
-        onClick={() => setSent(true)}
+        onClick={contact}
         className="mt-5 w-full rounded-[24px] bg-[var(--accent)] px-8 py-4 text-lg font-extrabold text-white transition hover:bg-[var(--accent-hover)] sm:w-auto"
       >
-        Связаться с нами
+        Написать нам
       </button>
-
-      {sent ? (
-        <p className="animate-fade-rise mt-4 text-base font-bold text-[var(--mint)]">
-          Спасибо! Мы свяжемся — пока демо без отправки.
-        </p>
-      ) : null}
 
       <div className="mt-8 flex flex-wrap justify-center gap-3">
         <Link
@@ -67,7 +67,7 @@ export function FreeScenario({ query }: FreeScenarioProps) {
           📷 Фотопечать
         </Link>
         <Link
-          href="/create?q=Корпоративный%20заказ&scenario=business"
+          href="/create?q=Корпоративный%20заказ&scenario=corporate"
           className="rounded-[18px] bg-white px-4 py-3 text-sm font-extrabold shadow-[var(--shadow-soft)]"
         >
           🏢 Бизнес

@@ -2,12 +2,12 @@
 
 import Link from "next/link";
 import { usePathname } from "next/navigation";
-import { useState } from "react";
+import { useEffect, useState } from "react";
+import { BRAND_NAME } from "../../lib/brand";
 import {
   GIFT_HUB_NAV,
   isGiftHubPathActive,
 } from "../../lib/gift-hub";
-import { BRAND_NAME } from "../../lib/brand";
 import { SiteAuthBar } from "../auth/site-auth-bar";
 
 const HIDDEN_PREFIXES = [
@@ -22,6 +22,14 @@ const HIDDEN_PREFIXES = [
 export function GiftHubNav() {
   const pathname = usePathname() || "/";
   const [open, setOpen] = useState(false);
+  const [hash, setHash] = useState("");
+
+  useEffect(() => {
+    const sync = () => setHash(window.location.hash);
+    sync();
+    window.addEventListener("hashchange", sync);
+    return () => window.removeEventListener("hashchange", sync);
+  }, [pathname]);
 
   if (HIDDEN_PREFIXES.some((p) => pathname === p || pathname.startsWith(`${p}/`))) {
     return null;
@@ -39,11 +47,11 @@ export function GiftHubNav() {
         </Link>
 
         <nav
-          className="hidden min-w-0 flex-1 items-center justify-center gap-0.5 overflow-x-auto lg:flex"
+          className="hidden min-w-0 flex-1 items-center justify-center gap-0.5 overflow-x-auto scrollbar-none lg:flex"
           aria-label="Основные разделы"
         >
           {GIFT_HUB_NAV.map((item) => {
-            const active = isGiftHubPathActive(pathname, item.href);
+            const active = isGiftHubPathActive(pathname, item.href, hash);
             return (
               <Link
                 key={item.id}
@@ -84,7 +92,7 @@ export function GiftHubNav() {
         >
           <ul className="grid grid-cols-2 gap-2 sm:grid-cols-3">
             {GIFT_HUB_NAV.map((item) => {
-              const active = isGiftHubPathActive(pathname, item.href);
+              const active = isGiftHubPathActive(pathname, item.href, hash);
               return (
                 <li key={item.id}>
                   <Link

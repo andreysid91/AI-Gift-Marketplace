@@ -61,7 +61,7 @@ export function AccountPanel() {
     const all = loadAdminOrders();
     const next = all.map((o) =>
       o.id === orderId
-        ? setOrderStatus(o, "Доставлено", "Демо: заказ выполнен")
+        ? setOrderStatus(o, "Доставлено", "Заказ отмечен доставленным")
         : o,
     );
     saveAdminOrders(next);
@@ -210,9 +210,9 @@ export function AccountPanel() {
                       <button
                         type="button"
                         onClick={() => markDelivered(order.id)}
-                        className="text-xs font-extrabold text-[var(--accent)] hover:underline"
+                        className="text-xs font-extrabold text-[var(--muted)] hover:text-[var(--accent)] hover:underline"
                       >
-                        Демо: доставить
+                        Отметить доставленным
                       </button>
                     </div>
                   ) : null}
@@ -239,12 +239,29 @@ export function AccountPanel() {
         </div>
       ) : null}
 
+      {orders.length === 0 && account.orderIds.length === 0 ? (
+        <div className="mt-6 rounded-[22px] bg-[var(--surface-warm)] px-5 py-5">
+          <p className="font-[family-name:var(--font-unbounded)] text-lg font-semibold">
+            Пока нет заказов
+          </p>
+          <p className="mt-2 text-sm font-bold text-[var(--muted)]">
+            Оформите подарок без регистрации — кабинет заполнится сам после заявки.
+          </p>
+          <Link
+            href="/create?scenario=gift"
+            className="mt-4 inline-flex rounded-[18px] bg-[var(--accent)] px-5 py-3 text-sm font-extrabold text-white"
+          >
+            Выбрать подарок
+          </Link>
+        </div>
+      ) : null}
+
       <div className="mt-8 flex flex-col gap-3 sm:flex-row">
         <Link
           href="/profile"
           className="inline-flex flex-1 items-center justify-center rounded-[22px] border-2 border-[var(--accent)] bg-white px-6 py-4 text-base font-extrabold text-[var(--accent)] transition hover:bg-[var(--accent-soft)]"
         >
-          Gift Profile
+          Профиль подарков
         </Link>
         <Link
           href="/recipients"

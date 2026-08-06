@@ -1,4 +1,5 @@
 import type { Metadata } from "next";
+import { Suspense } from "react";
 import { GiftPageView } from "../../components/gift-page/gift-page-view";
 import { resolveGiftPage } from "../../lib/gift-page";
 
@@ -15,5 +16,15 @@ export default async function GiftPage({ searchParams }: GiftPageProps) {
   const { id } = await searchParams;
   const model = resolveGiftPage(id);
 
-  return <GiftPageView model={model} />;
+  return (
+    <Suspense
+      fallback={
+        <main className="flex min-h-screen items-center justify-center font-bold text-[var(--muted)]">
+          Загрузка…
+        </main>
+      }
+    >
+      <GiftPageView model={model} />
+    </Suspense>
+  );
 }

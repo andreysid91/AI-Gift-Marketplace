@@ -8,7 +8,13 @@ export const metadata: Metadata = {
     "Напишите что угодно — фигурку, тираж, вышивку, шахматы. Подготовим варианты реализации.",
 };
 
-export default function ContactPage() {
+type ContactPageProps = {
+  searchParams: Promise<{ idea?: string }>;
+};
+
+export default async function ContactPage({ searchParams }: ContactPageProps) {
+  const { idea } = await searchParams;
+
   return (
     <main className="relative min-h-screen overflow-x-hidden">
       <div
@@ -28,7 +34,7 @@ export default function ContactPage() {
           Опишите свою идею
         </h1>
 
-        <IdeaForm />
+        <IdeaForm initialIdea={idea?.trim() ?? ""} />
       </div>
     </main>
   );

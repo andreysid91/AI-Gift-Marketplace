@@ -253,6 +253,8 @@ export function GiftPickerView({
       createdAt: new Date().toISOString(),
     });
     const params = new URLSearchParams({ from: "gift", q: displayQuery });
+    const primary = lines.find((l) => l.kind === "product") ?? lines[0];
+    if (primary?.id) params.set("id", primary.id);
     const rid = loadSelectedRecipientId() || recipientId;
     if (rid) params.set("recipient", rid);
     router.push(`/checkout?${params.toString()}`);
@@ -260,11 +262,11 @@ export function GiftPickerView({
 
   const sourceLabel =
     recommendation?.source === "ai"
-      ? "Уточнение подбора"
+      ? "Уточняем варианты…"
       : recommendation?.source === "knowledge"
-        ? "Gift Engine · база знаний"
+        ? "Подбор по вашему запросу"
         : aiLoading
-          ? "Gift Engine уточняет подбор…"
+          ? "Подбираем варианты…"
           : null;
 
   return (
@@ -276,7 +278,11 @@ export function GiftPickerView({
 
       <div className="relative z-10 mx-auto w-full max-w-7xl px-5 py-8 sm:px-8 lg:py-10">
         <Link
-          href="/"
+          href={
+            displayQuery
+              ? `/create?q=${encodeURIComponent(displayQuery)}&scenario=gift`
+              : "/create?scenario=gift"
+          }
           className="inline-flex text-base font-extrabold text-[var(--accent)] hover:underline"
         >
           ← Изменить запрос
@@ -352,8 +358,8 @@ export function GiftPickerView({
             </p>
           ) : null}
           {hasPhoto ? (
-            <p className="mt-2 text-base font-bold text-[var(--mint)]">
-              Фотография учтена в подборе
+            <p className="mt-2 text-base font-bold text-[var(--muted)]">
+              Фото отмечено — приложите файл при подтверждении заказа
             </p>
           ) : null}
         </header>
@@ -371,7 +377,7 @@ export function GiftPickerView({
                   ? "Ваш готовый набор"
                   : recommendation
                     ? recommendation.readySet.title
-                    : "Конструктор подарка"}
+                    : "Ваш набор подарка"}
               </p>
               <p className="relative mt-2 text-base font-bold text-white/90">
                 {recommendation

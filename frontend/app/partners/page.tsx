@@ -44,13 +44,12 @@ export default function PartnersPage() {
         </div>
 
         <p className="mt-10 text-base font-bold text-[var(--muted)]">
-          Mock-данные · без backend ·{" "}
           <Link href="/partner" className="text-[var(--accent)] hover:underline">
-            Partner Portal
+            Вход для партнёров
           </Link>
           {" · "}
-          <Link href="/admin" className="text-[var(--accent)] hover:underline">
-            админка
+          <Link href="/contact" className="text-[var(--accent)] hover:underline">
+            Стать партнёром
           </Link>
         </p>
       </div>

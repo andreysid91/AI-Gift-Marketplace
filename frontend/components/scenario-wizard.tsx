@@ -122,7 +122,7 @@ export function ScenarioWizard({
       <div className="rounded-[32px] bg-white p-6 shadow-[var(--shadow)] sm:p-8">
         <div className="flex flex-wrap items-center justify-between gap-3">
           <p className="text-sm font-extrabold uppercase tracking-wide text-[var(--muted)]">
-            Scenario Engine · {getScenarioLabel(state.scenarioId)}
+            Сценарий · {getScenarioLabel(state.scenarioId)}
           </p>
           <p className="text-sm font-extrabold text-[var(--muted)]">
             Шаг {Math.min(progress.current, progress.total)} / {progress.total}

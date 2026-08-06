@@ -1,4 +1,5 @@
 import { runInspirationEngine } from "../inspiration-engine";
+import { HOME_PHOTOS } from "../home-media";
 import { MOCK_IDEAS } from "../mock-ideas";
 import { formatLeadTimeLabel } from "../gift-engine";
 import {
@@ -35,6 +36,15 @@ const IDEA_TO_PRODUCT: Record<string, string> = {
   "idea-08": "mug",
 };
 
+const PRODUCT_PHOTOS: Record<string, [string, string, string]> = {
+  mug: [HOME_PHOTOS.mugHands, HOME_PHOTOS.mugWarm, HOME_PHOTOS.packing],
+  tee: [HOME_PHOTOS.teeWear, HOME_PHOTOS.smileOpen, HOME_PHOTOS.packing],
+  canvas: [HOME_PHOTOS.canvasWall, HOME_PHOTOS.coupleGift, HOME_PHOTOS.packing],
+  puzzle: [HOME_PHOTOS.familyTable, HOME_PHOTOS.kids, HOME_PHOTOS.packing],
+  photo: [HOME_PHOTOS.photoPrint, HOME_PHOTOS.coupleGift, HOME_PHOTOS.packing],
+  default: [HOME_PHOTOS.packing, HOME_PHOTOS.birthday, HOME_PHOTOS.delivery],
+};
+
 function buildSlots(hours: number | null): GiftSlotOption[] {
   const h = hours ?? 48;
   return [
@@ -49,32 +59,44 @@ function buildSlots(hours: number | null): GiftSlotOption[] {
 }
 
 function buildMedia(
+  productId: string,
   emoji: string,
   tone: string,
   title: string,
 ): GiftMediaItem[] {
+  const photos = PRODUCT_PHOTOS[productId] ?? PRODUCT_PHOTOS.default;
   return [
-    { id: "m1", kind: "image", tone, emoji, label: title },
+    {
+      id: "m1",
+      kind: "image",
+      tone,
+      emoji,
+      label: title,
+      imageUrl: photos[0],
+    },
     {
       id: "m2",
       kind: "image",
       tone: "from-[#ffe8da] to-[#ffc9b0]",
       emoji,
-      label: "Ракурс 2",
+      label: "Крупный план",
+      imageUrl: photos[1],
     },
     {
       id: "m3",
       kind: "image",
       tone: "from-[#fff4ec] to-[#ffd0c4]",
-      emoji: "✨",
-      label: "В интерьере",
+      emoji: "📦",
+      label: "Упаковка",
+      imageUrl: photos[2],
     },
     {
       id: "m4",
       kind: "video",
       tone: "from-[#2a1810] to-[#5a3a2a]",
-      emoji: "▶️",
-      label: "Видео (скоро)",
+      emoji: "🎬",
+      label: "Превью вручения",
+      imageUrl: HOME_PHOTOS.smileOpen,
     },
   ];
 }
@@ -146,7 +168,7 @@ export function resolveGiftPage(
     emoji,
     tone,
     schema,
-    media: buildMedia(emoji, tone, title),
+    media: buildMedia(productId, emoji, tone, title),
     why: DEFAULT_WHY,
     slots: buildSlots(hours),
     addons: GIFT_PAGE_ADDONS,
@@ -159,7 +181,7 @@ export function resolveGiftPage(
     popularWeek: mockPopularWeek(),
     comments: mockComments(),
     orderHref: `/checkout?id=${encodeURIComponent(id)}&from=gift`,
-    similarHref: `/design?product=${encodeURIComponent(productId)}`,
+    similarHref: `/ideas?q=${encodeURIComponent(title)}&from=similar`,
     blocks: mergeGiftPageBlocks(blocksOverride),
   };
 }

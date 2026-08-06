@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import { Nunito, Unbounded } from "next/font/google";
 import { GiftHubNav } from "../components/gift-hub/gift-hub-nav";
+import { SiteFooter } from "../components/site-footer";
 import "./globals.css";
 
 const nunito = Nunito({
@@ -34,6 +35,7 @@ export default function RootLayout({
       <body className="flex min-h-full flex-col font-sans">
         <GiftHubNav />
         <div className="flex flex-1 flex-col">{children}</div>
+        <SiteFooter />
       </body>
     </html>
   );

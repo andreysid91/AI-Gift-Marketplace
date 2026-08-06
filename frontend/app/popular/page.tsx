@@ -5,7 +5,7 @@ import { getTopByGiftScore } from "../../lib/gift-score";
 
 export const metadata: Metadata = {
   title: "Популярное — Gift",
-  description: "Самые популярные подарки и рейтинги Gift Score",
+  description: "Самые популярные подарки и рейтинги",
 };
 
 export default function PopularPage() {
@@ -22,7 +22,7 @@ export default function PopularPage() {
           Популярное
         </h1>
         <p className="mt-3 max-w-2xl text-lg font-bold text-[var(--muted)]">
-          Хиты и топ Gift Score — сразу к созданию похожего подарка
+          Хиты и топ рейтинга — сразу к созданию похожего подарка
         </p>
 
         <div className="mt-10">
@@ -32,7 +32,7 @@ export default function PopularPage() {
         <section className="mt-14">
           <div className="flex flex-wrap items-end justify-between gap-3">
             <h2 className="font-[family-name:var(--font-unbounded)] text-2xl font-semibold sm:text-3xl">
-              Топ по Gift Score
+              Топ рейтинга
             </h2>
             <Link
               href="/ratings"
@@ -55,7 +55,7 @@ export default function PopularPage() {
                     {item.title}
                   </p>
                   <p className="mt-1 text-sm font-bold text-[var(--muted)]">
-                    Score {Math.round(item.score)} · ★ {item.stars}
+                    ★ {item.stars} · {item.orders} заказов
                   </p>
                   <p className="mt-auto pt-4 text-sm font-extrabold text-[var(--accent)]">
                     Открыть подарок →

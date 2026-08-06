@@ -22,11 +22,11 @@ export function GiftRankingsView({ rankings }: GiftRankingsViewProps) {
         </Link>
 
         <h1 className="mt-6 font-[family-name:var(--font-unbounded)] text-4xl font-semibold sm:text-5xl">
-          Gift Score
+          Рейтинг подарков
         </h1>
         <p className="mt-3 max-w-2xl text-lg font-bold text-[var(--muted)]">
-          Единый рейтинг подарков: звёзды, заказы, лайки, сохранения, отзывы и
-          повторные покупки. Пока mock-данные.
+          Единый рейтинг: звёзды, заказы, лайки, сохранения, отзывы и повторные
+          покупки.
         </p>
 
         <nav className="mt-8 flex flex-wrap gap-2">
@@ -95,7 +95,7 @@ export function GiftRankingsView({ rankings }: GiftRankingsViewProps) {
 
         <section className="mt-16 rounded-[32px] bg-white p-6 shadow-[var(--shadow)] sm:p-8">
           <h2 className="font-[family-name:var(--font-unbounded)] text-2xl font-semibold">
-            Как считается Score
+            Как считается рейтинг
           </h2>
           <p className="mt-3 text-base font-bold text-[var(--muted)]">
             Звёзды 35% · заказы 25% · лайки 15% · сохранения 10% · отзывы 10% ·

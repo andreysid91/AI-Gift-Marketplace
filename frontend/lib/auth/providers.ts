@@ -8,7 +8,8 @@ export const AUTH_PROVIDERS: AuthProviderConfig[] = [
   {
     id: "phone",
     label: "Телефон",
-    hint: "Вход по SMS-коду, без пароля",
+    hint: "SMS-код. Пока код покажем на экране",
+
     enabled: true,
     priority: 1,
   },

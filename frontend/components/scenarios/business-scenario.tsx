@@ -1,5 +1,6 @@
 "use client";
 
+import { useRouter } from "next/navigation";
 import { useRef, useState, type ChangeEvent } from "react";
 import {
   BUSINESS_PRODUCTS,
@@ -11,24 +12,35 @@ type BusinessScenarioProps = {
 };
 
 export function BusinessScenario({ query }: BusinessScenarioProps) {
+  const router = useRouter();
   const logoRef = useRef<HTMLInputElement>(null);
   const [products, setProducts] = useState<string[]>([]);
   const [quantity, setQuantity] = useState<string | null>(null);
   const [logoName, setLogoName] = useState<string | null>(null);
-  const [done, setDone] = useState(false);
 
   function toggle(title: string) {
     setProducts((prev) =>
       prev.includes(title) ? prev.filter((item) => item !== title) : [...prev, title],
     );
-    setDone(false);
   }
 
   function onLogo(event: ChangeEvent<HTMLInputElement>) {
     const file = event.target.files?.[0];
     if (!file) return;
     setLogoName(file.name);
-    setDone(false);
+  }
+
+  function requestQuote() {
+    if (products.length === 0 || !quantity) return;
+    const idea = [
+      query || "Корпоративный заказ",
+      `Изделия: ${products.join(", ")}`,
+      `Тираж: ${quantity}`,
+      logoName ? `Логотип: ${logoName}` : null,
+    ]
+      .filter(Boolean)
+      .join("\n");
+    router.push(`/contact?idea=${encodeURIComponent(idea)}`);
   }
 
   return (
@@ -77,10 +89,7 @@ export function BusinessScenario({ query }: BusinessScenarioProps) {
               <button
                 key={value}
                 type="button"
-                onClick={() => {
-                  setQuantity(value);
-                  setDone(false);
-                }}
+                onClick={() => setQuantity(value)}
                 className={`min-w-[84px] rounded-[18px] px-5 py-3.5 font-[family-name:var(--font-unbounded)] text-xl font-semibold transition ${
                   active
                     ? "bg-[var(--mint)] text-white"
@@ -123,17 +132,14 @@ export function BusinessScenario({ query }: BusinessScenarioProps) {
         <button
           type="button"
           disabled={products.length === 0 || !quantity}
-          onClick={() => setDone(true)}
+          onClick={requestQuote}
           className="w-full rounded-[26px] bg-[var(--mint)] px-8 py-5 text-xl font-extrabold text-white shadow-[var(--shadow)] transition hover:brightness-105 disabled:opacity-45 sm:w-auto sm:min-w-[280px]"
         >
-          Получить расчет
+          Получить расчёт
         </button>
-        {done ? (
-          <p className="animate-fade-rise mt-4 text-base font-bold text-[var(--muted)]">
-            {products.join(", ")} · тираж {quantity}
-            {logoName ? ` · ${logoName}` : ""} · демо без отправки
-          </p>
-        ) : null}
+        <p className="mt-4 max-w-lg text-sm font-bold text-[var(--muted)]">
+          Откроем форму заявки с выбранными изделиями и тиражом.
+        </p>
       </div>
     </div>
   );

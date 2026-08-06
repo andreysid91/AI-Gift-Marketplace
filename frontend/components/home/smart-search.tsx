@@ -212,8 +212,8 @@ export function SmartSearch({ className = "", autoFocus = false }: SmartSearchPr
                       {item.kind === "complete"
                         ? "подсказка"
                         : item.kind === "scenario"
-                          ? "сценарий"
-                          : "хит"}
+                          ? "подбор"
+                          : "популярное"}
                     </span>
                   </button>
                 </li>
@@ -225,7 +225,7 @@ export function SmartSearch({ className = "", autoFocus = false }: SmartSearchPr
               </li>
             ) : snapshot.ready ? (
               <li className="border-t border-[var(--line)] px-5 py-3 text-sm font-bold text-[var(--mint)] sm:px-6">
-                Enter → открыть сценарий
+                Enter → подобрать подарок
               </li>
             ) : null}
           </ul>

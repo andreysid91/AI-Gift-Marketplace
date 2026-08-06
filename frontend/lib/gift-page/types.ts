@@ -34,6 +34,8 @@ export type GiftMediaItem = {
   tone: string;
   emoji: string;
   label?: string;
+  /** Realistic product photo when available */
+  imageUrl?: string;
 };
 
 export type GiftWhyReason = {

@@ -184,7 +184,7 @@ export function CreateInspirationForm({ orderId }: Props) {
         </h1>
         <p className="mt-3 font-bold text-[var(--muted)]">
           {existing.publishToGallery
-            ? "Работа сохранена и доступна для Inspiration Engine."
+            ? "Работа сохранена и может показываться как вдохновение на страницах подарков."
             : "Она сохранена как личная."}
         </p>
         <div className="mt-6 flex flex-wrap gap-3">
@@ -283,7 +283,7 @@ export function CreateInspirationForm({ orderId }: Props) {
             Поделиться как вдохновение
           </span>
           <span className="mt-1 block text-sm font-bold text-[var(--muted)]">
-            Работа попадёт в Inspiration Engine на страницах подарков. По
+            Работа может появиться как идея на страницах похожих подарков. По
             умолчанию — только у вас в кабинете.
           </span>
         </span>

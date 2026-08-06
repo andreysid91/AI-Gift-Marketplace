@@ -54,7 +54,10 @@ export default async function SuccessPage({ searchParams }: SuccessPageProps) {
             Спасибо{name ? `, ${name.split(/\s+/)[0]}` : ""}!
           </h1>
           <p className="mt-3 animate-[fade-rise_0.7s_ease-out_both] text-xl font-extrabold sm:text-2xl">
-            Ваш заказ принят.
+            Заявка принята — оплаты на сайте нет.
+          </p>
+          <p className="mt-2 animate-[fade-rise_0.72s_ease-out_both] text-base font-bold text-[var(--muted)]">
+            Мы свяжемся, подтвердим детали и запустим изготовление.
           </p>
           {order ? (
             <p className="mt-2 animate-[fade-rise_0.75s_ease-out_both] text-base font-extrabold text-[var(--accent)]">
@@ -65,7 +68,7 @@ export default async function SuccessPage({ searchParams }: SuccessPageProps) {
 
         <div className="mt-8 animate-[fade-rise_0.85s_ease-out_both] rounded-[32px] bg-white p-6 shadow-[var(--shadow)] sm:p-8">
           <p className="text-sm font-extrabold uppercase tracking-wide text-[var(--muted)]">
-            Статус заказа
+            Что дальше
           </p>
           <div className="mt-5">
             <OrderTimeline status="Новая заявка" />
