@@ -12,6 +12,8 @@ const eslintConfig = defineConfig([
     "out/**",
     "build/**",
     "next-env.d.ts",
+    // Abandoned nested scaffold — not part of the App Router product
+    "ai-gift-marketplace/**",
   ]),
 ]);
 

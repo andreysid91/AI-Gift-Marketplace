@@ -8,6 +8,7 @@ import {
   formatPrice,
   type GiftIdea,
 } from "../lib/mock-ideas";
+import { trackFilter, trackProductOpen } from "../lib/learning";
 
 type IdeasViewProps = {
   query: string;
@@ -57,6 +58,7 @@ export function IdeasView({ query, hasPhoto }: IdeasViewProps) {
 
   function updateFilter(key: keyof Filters, value: string) {
     setFilters((prev) => ({ ...prev, [key]: value }));
+    if (value) trackFilter(key, value);
   }
 
   function resetFilters() {
@@ -266,6 +268,7 @@ function IdeaCard({ idea }: { idea: GiftIdea }) {
 
         <Link
           href={`/product?id=${idea.id}`}
+          onClick={() => trackProductOpen(idea.id)}
           className="mt-5 inline-flex items-center justify-center rounded-[22px] bg-[var(--accent)] px-5 py-3.5 text-base font-extrabold text-white transition hover:bg-[var(--accent-hover)]"
         >
           Подробнее

@@ -1,0 +1,93 @@
+[
+  {
+    "id": "realistic",
+    "name": "Реализм",
+    "description": "Фотореалистичный стиль печати.",
+    "averagePrice": 0,
+    "productionTimeHours": null,
+    "technologies": ["photo-print", "canvas-print"],
+    "partners": ["photo-lab"],
+    "occasions": ["anniversary", "wedding", "baby", "birthday"],
+    "suitableFor": ["mom", "dad", "wife", "husband"],
+    "recommendedAddons": ["box", "card"],
+    "aliases": ["реализм", "фото", "реалистичн"]
+  },
+  {
+    "id": "caricature",
+    "name": "Карикатура",
+    "description": "Весёлый шаржированный портрет.",
+    "averagePrice": 1500,
+    "productionTimeHours": 48,
+    "technologies": ["canvas-print", "uv-print", "dtf"],
+    "partners": ["print-hub", "textile-pro"],
+    "occasions": ["birthday", "corporate", "jubilee"],
+    "suitableFor": ["friend-m", "friend-f", "colleague", "boss", "dad"],
+    "recommendedAddons": ["box", "card"],
+    "aliases": ["карикатура", "шарж"]
+  },
+  {
+    "id": "pixar",
+    "name": "Pixar",
+    "description": "Мультяшный 3D-стиль в духе анимации.",
+    "averagePrice": 1800,
+    "productionTimeHours": 48,
+    "technologies": ["canvas-print", "dtf"],
+    "partners": ["print-hub", "textile-pro"],
+    "occasions": ["birthday", "baby", "graduation"],
+    "suitableFor": ["brother", "sister", "friend-m", "friend-f"],
+    "recommendedAddons": ["box", "card", "chocolate"],
+    "aliases": ["pixar", "пиксар", "мультяшн"]
+  },
+  {
+    "id": "watercolor",
+    "name": "Акварель",
+    "description": "Мягкий живописный стиль.",
+    "averagePrice": 1600,
+    "productionTimeHours": 48,
+    "technologies": ["canvas-print", "photo-print"],
+    "partners": ["photo-lab"],
+    "occasions": ["march-8", "anniversary", "wedding", "birthday"],
+    "suitableFor": ["mom", "wife", "girlfriend", "sister"],
+    "recommendedAddons": ["box", "card", "candle"],
+    "aliases": ["акварель", "живописн"]
+  },
+  {
+    "id": "minimal",
+    "name": "Минимализм",
+    "description": "Чистые формы и лаконичный дизайн.",
+    "averagePrice": 0,
+    "productionTimeHours": null,
+    "technologies": ["dtf", "laser-engrave", "sublimation"],
+    "partners": ["textile-pro", "laser-craft"],
+    "occasions": ["corporate", "birthday", "new-year"],
+    "suitableFor": ["colleague", "boss", "boyfriend", "husband"],
+    "recommendedAddons": ["box", "card"],
+    "aliases": ["минимализм", "лаконичн", "minimal"]
+  },
+  {
+    "id": "pop-art",
+    "name": "Поп-арт",
+    "description": "Яркие цвета и контрастные акценты.",
+    "averagePrice": 1700,
+    "productionTimeHours": 48,
+    "technologies": ["canvas-print", "dtf", "poster"],
+    "partners": ["print-hub", "textile-pro"],
+    "occasions": ["birthday", "jubilee"],
+    "suitableFor": ["friend-m", "friend-f", "girlfriend", "boyfriend"],
+    "recommendedAddons": ["box", "card"],
+    "aliases": ["поп-арт", "pop art", "поп арт"]
+  },
+  {
+    "id": "festive",
+    "name": "Праздничный",
+    "description": "Сезонный и подарочный вайб.",
+    "averagePrice": 0,
+    "productionTimeHours": null,
+    "technologies": ["sublimation", "dtf", "uv-print"],
+    "partners": ["print-hub", "gift-fulfillment"],
+    "occasions": ["new-year", "march-8", "feb-23", "birthday"],
+    "suitableFor": [],
+    "recommendedAddons": ["box", "card", "chocolate", "candle"],
+    "aliases": ["праздничн", "новогодн"]
+  }
+]

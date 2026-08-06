@@ -15,9 +15,9 @@ const unbounded = Unbounded({
 });
 
 export const metadata: Metadata = {
-  title: "AI Gift — персональные подарки",
+  title: "AI Gift — что хотите подарить?",
   description:
-    "Опишите человека или загрузите фото — AI покажет готовые подарки, которые можно сразу заказать.",
+    "Опишите своими словами, а мы подберём лучшие варианты подарков.",
 };
 
 export default function RootLayout({

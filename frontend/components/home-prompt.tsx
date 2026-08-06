@@ -28,9 +28,12 @@ export function HomePrompt() {
   }
 
   return (
-    <div className="w-full animate-fade-rise-delay-2">
-      <label htmlFor="gift-prompt" className="sr-only">
-        Кому подарок
+    <div className="w-full">
+      <label
+        htmlFor="gift-prompt"
+        className="mb-2 block font-[family-name:var(--font-unbounded)] text-lg font-semibold text-[var(--foreground)] sm:text-xl"
+      >
+        Кому подарок?
       </label>
       <textarea
         id="gift-prompt"
@@ -42,30 +45,30 @@ export function HomePrompt() {
             goToIdeas();
           }
         }}
-        placeholder="Например: подарок брату на день рождения..."
-        rows={3}
-        className="w-full resize-none rounded-[28px] border-2 border-[var(--line)] bg-white px-6 py-5 text-lg font-bold leading-relaxed text-[var(--foreground)] shadow-[var(--shadow-soft)] outline-none transition placeholder:font-semibold placeholder:text-[var(--muted)] focus:border-[var(--accent)]"
+        placeholder="Брату на день рождения..."
+        rows={2}
+        className="w-full resize-none rounded-[22px] border-2 border-[var(--line)] bg-white px-4 py-3.5 text-base font-bold leading-relaxed text-[var(--foreground)] shadow-[var(--shadow-soft)] outline-none transition placeholder:font-semibold placeholder:text-[var(--muted)] focus:border-[var(--accent)] sm:text-lg"
       />
 
       {photoName ? (
-        <p className="mt-3 text-base font-bold text-[var(--mint)]">
-          Фото добавлено: {photoName}
+        <p className="mt-2 text-sm font-bold text-[var(--mint)]">
+          Фото: {photoName}
         </p>
       ) : null}
 
-      <div className="mt-5 grid gap-3 sm:grid-cols-2">
+      <div className="mt-3 grid gap-2.5 sm:grid-cols-2">
         <button
           type="button"
           onClick={goToIdeas}
-          className="animate-pulse-glow rounded-[24px] bg-[var(--accent)] px-6 py-5 text-lg font-extrabold text-white transition duration-200 hover:-translate-y-0.5 hover:bg-[var(--accent-hover)] active:translate-y-0"
+          className="rounded-[20px] bg-[var(--accent)] px-5 py-3.5 text-base font-extrabold text-white transition duration-200 hover:-translate-y-0.5 hover:bg-[var(--accent-hover)] active:translate-y-0 sm:text-lg"
         >
-          Найти подарок
+          Подобрать подарок
         </button>
 
         <button
           type="button"
           onClick={() => fileRef.current?.click()}
-          className="rounded-[24px] border-2 border-[var(--foreground)]/10 bg-[var(--secondary)] px-6 py-5 text-lg font-extrabold text-white shadow-[var(--shadow-soft)] transition duration-200 hover:-translate-y-0.5 hover:brightness-105 active:translate-y-0"
+          className="rounded-[20px] bg-[var(--secondary)] px-5 py-3.5 text-base font-extrabold text-white shadow-[var(--shadow-soft)] transition duration-200 hover:-translate-y-0.5 hover:brightness-105 active:translate-y-0 sm:text-lg"
         >
           Загрузить фотографию
         </button>

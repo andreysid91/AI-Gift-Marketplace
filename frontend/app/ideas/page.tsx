@@ -1,11 +1,23 @@
-import { IdeasView } from "../../components/ideas-view";
+import { GiftPickerView } from "../../components/gift-picker-view";
 
 type IdeasPageProps = {
-  searchParams: Promise<{ q?: string; photo?: string }>;
+  searchParams: Promise<{
+    q?: string;
+    photo?: string;
+    set?: string;
+    recipient?: string;
+  }>;
 };
 
 export default async function IdeasPage({ searchParams }: IdeasPageProps) {
-  const { q, photo } = await searchParams;
+  const { q, photo, set, recipient } = await searchParams;
 
-  return <IdeasView query={q ?? ""} hasPhoto={photo === "1"} />;
+  return (
+    <GiftPickerView
+      query={q ?? ""}
+      hasPhoto={photo === "1"}
+      setId={set}
+      recipientId={recipient}
+    />
+  );
 }
